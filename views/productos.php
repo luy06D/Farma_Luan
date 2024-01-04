@@ -33,7 +33,7 @@
               <!-- Bordered Tabs -->
               <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="true">Equipos</button>
+                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="true">Inventario</button>
                 </li>
                 <!-- <li class="nav-item" role="presentation">
                   <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">---</button>
@@ -55,7 +55,7 @@
                             <h5 class="card-title">Registrar Producto</h5>
                             <div class="mb-3 row">
                               <div class="col-lg-6 col-12"> 
-                                <button type="button" id="abrir-modal-registro" class="btn btn-primary btn-md ml-2 mr-2" data-bs-toggle="modal" data-bs-target="#modal-nuevo-equipo">
+                                <button type="button" id="abrir-modal-registro" class="btn btn-primary btn-md ml-2 mr-2" data-bs-toggle="modal" data-bs-target="#modal-newProduct">
                                   Nuevo
                                 </button>
                                 <!-- <button type="button" id="abrir-modal-recuperar" class="btn btn-primary btn-md ml-2 mr-2" data-bs-toggle="modal" data-bs-target="#modal-RecuperarEquipo">
@@ -90,7 +90,7 @@
                   </section>
 
                   <!-- Modal Registrar Equipo -->
-                  <div class="modal fade" id="modal-nuevo-equipo" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+                  <div class="modal fade" id="modal-newProduct" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl" role="document">
                       <div class="modal-content">
                         <div class="modal-header bg-primary" id="modal-header01">
@@ -98,7 +98,7 @@
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                          <form id="form-equipos">
+                          <form id="form-productos">
                             <div class="row">
                               <div class="col-lg-4">
                                 <label for="ls-categoria" class="col-form-label">Categoria:</label>
@@ -137,7 +137,7 @@
                               <div class="col-lg-4 mt-2">
                                 <label for="numlote" class="col-form-label">N° lote:</label>
                                 <div class="col-sm-12">
-                                  <input type="number" class="form-control" id="numlote" >
+                                  <input type="number" class="form-control" id="numlote" placeholder="Escriba aquí" >
                                 </div>
                               </div>
 
@@ -155,7 +155,7 @@
                               <div class="col-lg-8 mt-2">
                                 <label for="descripcion" class="col-form-label">Descripción:</label>
                                 <div class="col-sm-12">
-                                  <textarea type="text" class="form-control" placeholder="Escriba aquí" id="descripcion" rows="3"></textarea>
+                                  <textarea type="text" class="form-control" placeholder="Ingrese una descripción (Opcional)" id="descripcion" rows="3"></textarea>
                                 </div>
                               </div>
 
@@ -163,7 +163,7 @@
                           </form>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-primary" id="guardarequipo">Guardar</button>
+                          <button type="button" class="btn btn-primary" id="guardarProducto">Guardar</button>
                           <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         </div>
                       </div>
@@ -475,8 +475,9 @@
 
   <!-- Incluye Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../js/alertSweet.js"></script>
   <script src="../js/productos.js"></script>
-
+  
 
 
 
