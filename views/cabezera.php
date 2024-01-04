@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Inicio 3P</title>
+  <title>Farma Luan</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -41,7 +41,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="./index.php" class="logo d-flex align-items-center">
         <!-- <img src="../img/3plogo.png" alt="logo 3p"> -->
-        <span class="d-none d-lg-block"><span style="color: red;">3<span style="color: #0193F2 ;">P</span><span> tecnología</span></span>
+        <span class="d-none d-lg-block"><span style="color: red;"><span style="color: #0193F2 ;">Farma</span><span> Luan</span></span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
