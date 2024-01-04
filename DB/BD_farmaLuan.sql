@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS farma_luan;
 CREATE DATABASE farma_luan;
 USE farma_luan;
 
