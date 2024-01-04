@@ -33,6 +33,29 @@ if(isset($_GET['op'])){
             }
         }
     } 
+
+    
+
+    if($_GET['op'] == 'lista_productos'){
+
+        $data = $ventas->lista_productos();
+
+        if($data){
+            foreach($data as $listar){
+                echo "
+                <tr>
+                <td>{$listar['idproducto']}</td>
+                <td>{$listar['nombreproducto']}</td>
+                <td>{$listar['cantidad']}</td>
+                <td>{$listar['preciototal']}</td>                                           
+            </tr>
+                
+                
+                ";
+            }
+        }
+    } 
+
     
 
 }

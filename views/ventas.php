@@ -12,12 +12,14 @@
   <main id="main" class="main">
 
   <div class="pagetitle">
-      <h1>Ventas</h1>
+      <h1>Medicamento/Producto</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="./index.php">Inicio</a></li>
           <!-- <li class="breadcrumb-item"></li> -->
           <li class="breadcrumb-item active"><a href="./ventas.php">Ventas</a></li>
+
+          <li class="breadcrumb-item active"><a href="./productos.php">Productos</a></li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -33,9 +35,13 @@
               <!-- Bordered Tabs -->
               <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="true">Venta</button>
+                  <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="true">Buscar Medicamento/Producto</button>
                 </li>
-                
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#otraTabla" type="button" role="tab"  aria-selected="true"> Medicamento/Producto Agregados</button>
+                </li>
+
+
               </ul>
 
               <div class="tab-content pt-2" id="borderedTabContent">
@@ -78,10 +84,41 @@
                     </div>
                   </div>       
                  </section>
-
-                 
                 </div>
-               </div>
+               </div>   
+
+               
+               <div class="tab-content pt-2" id="bordered">
+                <div class="tab-pane fade active" id="otraTabla" role="tabpanel" aria-labelledby="home-tab">
+                 <section class="section mt-3">
+                  <div class="row">
+                    <div class="col-lg-12">
+                    <div class="card text-center">
+                          <div class="card-body">
+                              <h5 class="card-title">Lista de Medicamento/productos agregados</h5>
+
+                              <form class="row g-3 mt-4">
+                              <table id="tabla_producto" class="table table-striped table-hover responsive nowrap" style="width:100%">
+                                <thead >
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>precioTotal</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <!-- DATOS ASINCRONOS -->
+                                </tbody>
+                              </table>
+                            </form>
+                          </div>
+                      </div>
+                    </div>
+                  </div>       
+                 </section>
+                </div>
+               </div> 
 
           </div>
         </div>
@@ -91,6 +128,9 @@
 
   </main><!--fin main -->
 
+
+  
+  </main>
   <!-- sweetalert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- AJAX = JavaScript asincrónico-->
