@@ -21,6 +21,13 @@ if(isset($_POST['op'])){
         $respuesta = $productos->productos_registrar($data);
         echo json_encode($respuesta);
     }
+
+       
+    if($_POST['op'] == 'getCategorias'){
+
+        echo json_encode($productos->get_categorias());
+    }
+
 }
 
 if(isset($_GET['op'])){

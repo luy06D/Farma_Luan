@@ -21,6 +21,19 @@ public function productos_listar(){
     }
 }
 
+public function get_categorias(){
+    try{
+        $query = $this->connection->prepare("SELECT * FROM categorias");
+        $query->execute();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+
+    }catch(Exception $err){
+        die($err->getMessage());
+    }
+}
+
+
 public function productos_registrar ($datos = []){
     $respuesta = [
         "status" => false,
