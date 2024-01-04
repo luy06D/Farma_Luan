@@ -101,9 +101,9 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="../views/Serviciostabs.php">
-        <i class="bi bi-person-lines-fill"></i>
-          <span>Medicamentos</span>
+        <a class="nav-link collapsed" href="../views/productos.php">
+        <i class="bi bi-bag-plus"></i>
+          <span>Productos</span>
         </a>
       </li>
 
