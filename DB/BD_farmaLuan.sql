@@ -24,8 +24,6 @@ ENGINE=INNODB;
 INSERT INTO usuarios (nomusuario, claveacceso, nivelacceso) VALUES
 ('admin','123','administrador');
 
-SELECT * FROM usuarios;
-
 CREATE TABLE categorias
 (
 idcategoria		INT AUTO_INCREMENT PRIMARY KEY,
@@ -104,6 +102,12 @@ CONSTRAINT fk_idu_ven FOREIGN KEY (idusuario) REFERENCES usuarios (idusuario)
 )	
 ENGINE=INNODB;
 
+INSERT INTO ventas (idusuario)VALUES
+	(1);
+	
+INSERT INTO ventas (idusuario)VALUES
+	(1);
+
 CREATE TABLE detalleVentas
 (
 iddetalleventa  INT AUTO_INCREMENT PRIMARY KEY,
@@ -123,9 +127,13 @@ idpago 		INT AUTO_INCREMENT PRIMARY KEY,
 idventa 	INT 		NOT NULL,
 tipopago 	VARCHAR(20) 	NOT NULL,
 fechapago 	DATE 		NOT NULL DEFAULT NOW(),
+montototal	DECIMAL(6,2)	NULL,
+pago		DECIMAL(6,2)	NULL,
+cambio		DECIMAL(6,2)	NULL,
 CONSTRAINT fk_idv_pag FOREIGN KEY (idventa) REFERENCES ventas (idventa)  
 )	
 ENGINE=INNODB;
+
 
 CREATE TABLE ganancias 
 (

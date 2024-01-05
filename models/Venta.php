@@ -20,8 +20,9 @@ class Ventas extends Conexion{
     }
 
 
+
     public function lista_productos(){
-        try{ $query = $this->connection->prepare("SELECT * FROM listaProductos");
+        try{ $query = $this->connection->prepare("CALL ListarLiderDetalleVenta()");
             $query->execute();
             $data = $query->fetchAll(PDO::FETCH_ASSOC);
             return $data;
@@ -29,18 +30,49 @@ class Ventas extends Conexion{
         }catch(Exception $err){
             die($err->getMessage());
         }
-    }
+    } 
 
-    public function productos_agregar_lista($filtro){
-        try{ $query = $this->connection->prepare("CALL spu_productos_listar_ventas(?)");
-            $query->execute(array($filtro));
-            $data = $query->fetchAll(PDO::FETCH_ASSOC);
-            return $data;
+    public function productos_listar_id($idproducto){
+        $respuesta = [
+            "status" => false,
+            "message" => "",
+            "data" => []
+        ];
     
-        }catch(Exception $err){
-            die($err->getMessage());
+        try{
+            $consulta = $this->connection->prepare("CALL spu_listar_productoid(?)");
+            $consulta->bindParam(1, $idproducto, PDO::PARAM_INT);
+            $respuesta["status"] = $consulta->execute();
+    
+            // Obtener los resultados de la consulta
+            $respuesta["data"] = $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
+        catch(Exception $e){
+            $respuesta["message"] = "No se pudo completar la operación. Código de error: " .$e->getCode();
+        }
+    
+        return $respuesta;
     }
 
+    
+    
+    public function agregar_producto ($datos = []){
+        $respuesta = [
+            "status" => false,
+            "message" => ""
+        ];
+        try{
+            $consulta = $this->connection->prepare("CALL agregarProductoALaLista(?,?)");
+            $respuesta["status"] = $consulta->execute(array(
+                
+                $datos["idproducto"],
+                $datos["cantidad"],
+            ));
+        }
+        catch(Exception $e){
+            $respuesta["message"] = "No se pudo completar la operacion Codigo error: " .$e->getCode();
+        }
+        return $respuesta;
+    }
 
 }
