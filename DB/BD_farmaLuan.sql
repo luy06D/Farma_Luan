@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS farma_luan;
 CREATE DATABASE farma_luan;
 USE farma_luan;
 
@@ -60,13 +61,12 @@ CONSTRAINT ck_num_pro CHECK (numlote > 0)
 )
 ENGINE = INNODB;
 
-INSERT INTO productos (idcategoria, nombreproducto, descripcion, stock, precio, fechaproduccion, fechavencimiento, numlote, recetamedica)
-VALUES 
-
+INSERT INTO productos (idcategoria, nombreproducto, descripcion, stock, precio, fechaproduccion, fechavencimiento, numlote, recetamedica)VALUES 
 (1, 'Paracetamol', 'Analgesia para aliviar el dolor', 10, 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere'),
 (2, 'Amoxicilina', 'Antibiótico para tratar infecciones', 10,  12.99, '2022-02-01', '2025-02-01', 54321, 'Requiere'),
 (3, 'Ibuprofeno', 'Antiinflamatorio para reducir la inflamación',10,  7.50, '2022-03-01', '2026-03-01', 67890, 'No requiere');
 
+SELECT * FROM productos ;
 
 CREATE TABLE compraProductos
 (
@@ -154,6 +154,9 @@ fechatransaccion	DATE		NOT NULL DEFAULT NOW(),
 CONSTRAINT fk_idg FOREIGN KEY (idganancia) REFERENCES ganancias (idganancia)
 )
 ENGINE = INNODB;
+
+
+
 
 
 

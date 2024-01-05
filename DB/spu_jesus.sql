@@ -3,7 +3,7 @@ USE farma_luan;
 -- PROCEDIMIENTOS VENTAS
 
 DELIMITER $$
-CREATE PROCEDURE spu_productos_listar_ventas(IN nombreP VARCHAR(255))
+CREATE PROCEDURE spu_productos_listar_ventas(IN nombreP VARCHAR(40))
 BEGIN 
     SELECT 
         productos.idproducto, 
@@ -15,8 +15,10 @@ BEGIN
         productos.recetamedica
     FROM productos 
     INNER JOIN categorias ON categorias.idcategoria = productos.idcategoria
-    WHERE productos.estado = '1' AND (nombreP = '' OR productos.nombreproducto LIKE CONCAT(nombreP, '%'));
+    WHERE nombreP = '' OR productos.nombreproducto LIKE CONCAT(nombreP, '%');
 END $$
+
+CALL spu_productos_listar_ventas('par');
 
 DELIMITER $$
 CREATE PROCEDURE spu_listar_productoid(IN p_idproducto INT)
@@ -169,6 +171,4 @@ SELECT * FROM pagos;
 
 -- PROCEDIMINETO finalizarVenta
 CALL finalizarVenta();
-
-
 
