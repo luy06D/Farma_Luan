@@ -84,4 +84,30 @@ WHERE PRO.idproducto = _idproducto;
 END $$
 
 
+-- REGISTRAR COMPRAS
+DELIMITER $$
+CREATE PROCEDURE spu_compra_registrar
+(
+IN _idusuario INT,
+IN _idproducto INT,
+IN _cantidad SMALLINT,
+IN _preciocompra DECIMAL(7,2)
+)
+BEGIN 
+	DECLARE idcompra_g INT;
+	
+	INSERT INTO compraProductos (idusuario) VALUES
+		(_idusuario);
+		
+	SELECT LAST_INSERT_ID() INTO idcompra_g;
+	
+	INSERT INTO detalleCompras (idproducto, idcompraproducto, cantidad, preciocompra) VALUES
+			(_idproducto, idcompra_g, _cantidad, _preciocompra);
+
+
+END $$
+
+CALL spu_compra_registrar()
+
+SELECT * FROM usuarios
 
