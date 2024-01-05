@@ -62,9 +62,10 @@ ENGINE = INNODB;
 
 INSERT INTO productos (idcategoria, nombreproducto, descripcion, stock, precio, fechaproduccion, fechavencimiento, numlote, recetamedica)
 VALUES 
-(1, 'Paracetamol', 'Analgesia para aliviar el dolor', 4, 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere'),
-(2, 'Amoxicilina', 'Antibiótico para tratar infecciones', 4,  12.99, '2022-02-01', '2025-02-01', 54321, 'Requiere'),
-(3, 'Ibuprofeno', 'Antiinflamatorio para reducir la inflamación',4,  7.50, '2022-03-01', '2026-03-01', 67890, 'No requiere');
+(1, 'Paracetamol', 'Analgesia para aliviar el dolor', 10, 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere'),
+(2, 'Amoxicilina', 'Antibiótico para tratar infecciones', 10,  12.99, '2022-02-01', '2025-02-01', 54321, 'Requiere'),
+(3, 'Ibuprofeno', 'Antiinflamatorio para reducir la inflamación',10,  7.50, '2022-03-01', '2026-03-01', 67890, 'No requiere');
+
 
 
 CREATE TABLE compraProductos
