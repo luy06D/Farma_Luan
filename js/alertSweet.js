@@ -39,6 +39,15 @@ function mostrarSweetAlert(title, icon, text, timer = 1500) {
     });
 
     }
+
+    function stockInsuficiente(){
+      Swal.fire({
+        title: "Stock insuficiente",
+        icon: "warning",
+        confirmButtonColor: "#E43D2C",
+    });
+
+    }
     
     // ERROR registrado
     function errorRegistrado(titulo){
