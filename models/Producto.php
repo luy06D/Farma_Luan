@@ -65,7 +65,7 @@ public function productos_actualizar ($datos = []){
         "message" => ""
     ];
     try{
-        $consulta = $this->connection->prepare("CALL spu_productos_update(?,?,?,?,?,?,?,?)");
+        $consulta = $this->connection->prepare("CALL spu_productos_update(?,?,?,?,?,?,?,?,?)");
         $respuesta["status"] = $consulta->execute(array(
             
             $datos["idproducto"],

@@ -2,7 +2,7 @@ USE farma_luan;
 
 -- PROCEDIMIENTOS PRODUCTOS
 
--- LISTAR PRODUCTOS
+-- LISTAR PRODUCTOS / PDF STOCK
 DELIMITER $$
 CREATE PROCEDURE spu_productos_listar()
 BEGIN 
@@ -44,7 +44,7 @@ IN _idproducto	INT,
 IN _idcategoria INT,
 IN _nombreproducto VARCHAR(40),
 IN _descripcion	    VARCHAR(150),
-IN _precio	    SMALLINT,
+IN _precio	    DECIMAL(5,2),
 IN _fechaproduccion	DATE,
 IN _fechavencimiento	DATE,
 IN _numlote		INT,
@@ -66,6 +66,7 @@ BEGIN
 
 END $$
 
+CALL spu_productos_update(1, 1, 'Paracetamol', 'Analgesia para aliviar el dolor', 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere');
 
 -- GET PRODUCTOS
 
@@ -73,15 +74,14 @@ DELIMITER $$
 CREATE PROCEDURE spu_getProductos(IN _idproducto INT)
 BEGIN
 
-SELECT 	PRO.idproducto, PRO.nombreproducto, CA.nombrecategoria,
+SELECT 	PRO.idproducto, PRO.nombreproducto,CA.idcategoria, CA.nombrecategoria,
 	PRO.stock,PRO.estado, PRO.precio, PRO.fechaproduccion,
-	PRO.fechavencimiento, PRO.recetamedica
+	PRO.fechavencimiento, PRO.numlote, PRO.recetamedica, PRO.descripcion
 FROM productos PRO
 INNER JOIN categorias CA ON CA.idcategoria = PRO.idcategoria
 WHERE PRO.idproducto = _idproducto;
 
 END $$
-
 
 
 

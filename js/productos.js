@@ -123,8 +123,10 @@ $(document).ready(function(){
             },
             dataType: 'JSON',
             success: function (result){
-                $("#ls-categoria").val(result.nombrecategoria);
+    
+                $("#ls-categoria").val(result.idcategoria);
                 $("#nombreProducto").val(result.nombreproducto);
+                $("#descripcion").val(result.descripcion);
                 $("#precio").val(result.precio);
                 $("#fechaproduccion").val(result.fechaproduccion);
                 $("#fechavencimiento").val(result.fechavencimiento);
@@ -162,6 +164,12 @@ $(document).ready(function(){
 
     }
 
+
+    // Generar un reporte PDF del Inventario
+    function createPDF(){
+        window.open(`../reports/inventario.report.php`, `_blank`);
+    }
+
     // Ontener el idproducto de la lista
     $("#tabla-producto tbody").on("click", ".editar-product", function (){
         idproducto = $(this).data("idproducto");
@@ -170,6 +178,7 @@ $(document).ready(function(){
     
     $("#abrir-modal-registro").click(abriModalRegistro);
     $("#guardarProducto").click(productos_registrar);
+    $("#reporte-inventario").click(createPDF);
 
 
     productos_listar();
