@@ -1,5 +1,10 @@
 $(document).ready(function(){
 
+    let dataNew = true;
+    let idproducto = 0;
+
+
+
     // LISTAR PRODUCTOS
     function productos_listar(){
         $.ajax({
@@ -15,7 +20,10 @@ $(document).ready(function(){
                         url: '../js/Spanish.json'
                     },
                     responsive: true,
-                    searching: false
+                    pageLength: 10, 
+                    lengthChange: false,
+                    order: [[0, 'desc']],
+            
 
                 })
                 
@@ -59,7 +67,7 @@ $(document).ready(function(){
         const numlote       = $("#numlote").val().trim();
         const receta        = $("#ls-receta").val().trim();        
 
-        senData = {
+        let sendData = {
             'op'                : 'registrar_producto',
             'idcategoria'       : $("#ls-categoria").val(),
             'nombreproducto'    : $("#nombreProducto").val(),
@@ -69,6 +77,12 @@ $(document).ready(function(){
             'fechavencimiento'  : $("#fechavencimiento").val(),
             'numlote'           : $("#numlote").val(),
             'recetamedica'      : $("#ls-receta").val(),            
+        };
+
+        // Operacion para actualizar
+        if(!dataNew){
+            sendData['op'] = 'actualizar_producto';
+            sendData['idproducto'] = idproducto;
         }
 
         mostrarPregunta('Productos', '¿Está seguro de realizar la operación?')
@@ -79,14 +93,16 @@ $(document).ready(function(){
                     receta === ''){
                         completeCampos();
                     }else{
-                        toastFinalizar("Registrado correctamente");
+                        toastFinalizar("Operación exitosa");
                         $.ajax({
                             url: '../controllers/productos.controller.php',
                             type: 'POST',
-                            data: senData,
+                            data: sendData,
                             success: function(result){
                                 $("#form-productos")[0].reset();
                                 $("#modal-newProduct").modal('hide');
+                                dataNew = true;
+                                idproducto = 0;
                                 productos_listar();
                             }
                         })
@@ -97,6 +113,62 @@ $(document).ready(function(){
         
     }
 
+    function obtenerProducto(id){
+        $.ajax({
+            url: '../controllers/productos.controller.php',
+            type: 'GET',
+            data: {
+                'op' : 'get_productos',
+                'idproducto' : id
+            },
+            dataType: 'JSON',
+            success: function (result){
+                $("#ls-categoria").val(result.nombrecategoria);
+                $("#nombreProducto").val(result.nombreproducto);
+                $("#precio").val(result.precio);
+                $("#fechaproduccion").val(result.fechaproduccion);
+                $("#fechavencimiento").val(result.fechavencimiento);
+                $("#numlote").val(result.numlote);
+                $("#ls-receta").val(result.recetamedica);
+            }
+        });
+
+        $("#modal-titulo01").html("Actualizar equipo"); 
+        $("#modal-titulo01").removeClass("text-white"); 
+        $("#modal-titulo01").addClass("text-black");               
+        $("#modal-header01").removeClass("bg-primary");
+        $("#modal-header01").addClass("bg-warning");
+        $("#guardarProducto").addClass("btn btn-warning");
+        $("#guardarProducto").html("Actualizar");
+
+        dataNew = false;
+        $("#modal-newProduct").modal("show");
+
+
+    }
+
+
+    function abriModalRegistro(){
+
+        $("#modal-titulo01").html("Registro de producto");
+        $("#modal-titulo01").addClass("text-white");
+        $("#modal-header01").removeClass("bg-warning");
+        $("#modal-header01").addClass("bg-primary");
+        $("#guardarProducto").html("Guardar");
+        $("#guardarProducto").removeClass("btn btn-warning");
+        $("#guardarProducto").addClass("btn btn-primary");
+        $("#form-productos")[0].reset();
+        dataNew =true;
+
+    }
+
+    // Ontener el idproducto de la lista
+    $("#tabla-producto tbody").on("click", ".editar-product", function (){
+        idproducto = $(this).data("idproducto");
+        obtenerProducto(idproducto);
+    })
+    
+    $("#abrir-modal-registro").click(abriModalRegistro);
     $("#guardarProducto").click(productos_registrar);
 
 

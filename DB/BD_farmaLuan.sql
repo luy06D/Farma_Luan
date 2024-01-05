@@ -1,4 +1,3 @@
-DROP DATABASE IF EXISTS farma_luan;
 CREATE DATABASE farma_luan;
 USE farma_luan;
 
@@ -55,8 +54,9 @@ fechaproduccion		DATE		NULL,
 fechavencimiento	DATE		NULL,
 numlote			INT		NOT NULL,	
 recetamedica		VARCHAR(15)	NOT NULL, -- REQUIERE , NO REQUIERE
-estado 			CHAR(1)		NOT NULL DEFAULT '1',
+estado 			VARCHAR(10)	NOT NULL DEFAULT 'Agotado',
 CONSTRAINT fk_idc_pro FOREIGN KEY (idcategoria) REFERENCES categorias(idcategoria),
+CONSTRAINT uk_nom_pro UNIQUE(nombreproducto),
 CONSTRAINT ck_pre_pro CHECK (precio > 0),
 CONSTRAINT ck_num_pro CHECK (numlote > 0)
 )
@@ -64,11 +64,11 @@ ENGINE = INNODB;
 
 INSERT INTO productos (idcategoria, nombreproducto, descripcion, stock, precio, fechaproduccion, fechavencimiento, numlote, recetamedica)
 VALUES 
-(1, 'Paracetamol', 'Analgesia para aliviar el dolor', 4, 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere'),
-(2, 'Amoxicilina', 'Antibiótico para tratar infecciones', 4,  12.99, '2022-02-01', '2025-02-01', 54321, 'Requiere'),
-(3, 'Ibuprofeno', 'Antiinflamatorio para reducir la inflamación',4,  7.50, '2022-03-01', '2026-03-01', 67890, 'No requiere');
 
-SELECT 
+(1, 'Paracetamol', 'Analgesia para aliviar el dolor', 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere'),
+(2, 'Amoxicilina', 'Antibiótico para tratar infecciones', 12.99, '2022-02-01', '2025-02-01', 54321, 'Requiere'),
+(3, 'Ibuprofeno', 'Antiinflamatorio para reducir la inflamación', 7.50, '2022-03-01', '2026-03-01', 67890, 'No requiere');
+
 
 CREATE TABLE compraProductos
 (

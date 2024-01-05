@@ -44,35 +44,45 @@
                 </li> -->
                 
               </ul>
+              
               <div class="tab-content pt-2" id="borderedTabContent">
                 <div class="tab-pane fade show active" id="bordered-home" role="tabpanel" aria-labelledby="home-tab">
-                  <section class="section mt-3">
+                  <!-- SECCION BUSCAR PRODUCTO  -->
+                  <button type="button" id="abrir-modal-registro" class="btn btn-primary btn-md mb-3 mt-3 shadow-lg" data-bs-toggle="modal" data-bs-target="#modal-newProduct">
+                        Nuevo producto
+                  </button>
+          
+
+                  <section class="section mt-2">
                     <div class="row">
                       <div class="col-lg-12">
                         <div class="card">
 
                           <div class="card-body">
-                            <h5 class="card-title">Registrar Producto</h5>
+                            <h5 class="card-title">Lista de productos</h5>
                             <div class="mb-3 row">
                               <div class="col-lg-6 col-12"> 
-                                <button type="button" id="abrir-modal-registro" class="btn btn-primary btn-md ml-2 mr-2" data-bs-toggle="modal" data-bs-target="#modal-newProduct">
-                                  Nuevo
-                                </button>
+                              <button id="reporte-inventario" class="btn btn-danger" type="button">Generar reporte <i class="bi bi-file-earmark-pdf"></i></button>                                 
+                             
                                 <!-- <button type="button" id="abrir-modal-recuperar" class="btn btn-primary btn-md ml-2 mr-2" data-bs-toggle="modal" data-bs-target="#modal-RecuperarEquipo">
                                   <i class="bi bi-arrow-counterclockwise"></i>Recuperar
                                 </button> -->
                               </div>
                             </div>
 
+      
+
                             <form class="row g-3">
                               <table id="tabla-producto" class="table table-hover" style="width:100%">
                                 <thead class="table-primary">
                                   <tr>
-                                    <th>Item</th>
+                                    <th style="display: none;">Item</th>
                                     <th>Producto</th>
                                     <th>Categoria</th>
                                     <th>Stock</th>
                                     <th>Precio</th>
+                                    <th>Estado</th>
+                                    <th>Fecha Producción</th>
                                     <th>Fecha Vencimiento</th>
                                     <th>Receta Médica</th>                                    
                                     <th>Operación</th>

@@ -22,6 +22,24 @@ if(isset($_POST['op'])){
         echo json_encode($respuesta);
     }
 
+    
+    if($_POST['op'] == 'actualizar_producto'){
+        $data = [
+            "idproducto"       => $_POST['idproducto'],
+            "idcategoria"       => $_POST['idcategoria'],
+            "nombreproducto"    => $_POST['nombreproducto'],
+            "descripcion"       => $_POST['descripcion'],
+            "precio"            => $_POST['precio'],
+            "fechaproduccion"   => $_POST['fechaproduccion'],
+            "fechavencimiento"  => $_POST['fechavencimiento'],
+            "numlote"           => $_POST['numlote'],
+            "recetamedica"      => $_POST['recetamedica'],
+        ];
+
+        $respuesta = $productos->productos_actualizar($data);
+        echo json_encode($respuesta);
+    }
+
        
     if($_POST['op'] == 'getCategorias'){
 
@@ -46,10 +64,13 @@ if(isset($_GET['op'])){
                 <td>{$list['nombrecategoria']}</td>
                 <td>{$list['stock']}</td>
                 <td>{$list['precio']}</td>
+                <td>{$list['estado']}</td>
+                <td>{$list['fechaproduccion']}</td>
                 <td>{$list['fechavencimiento']}</td>
                 <td>{$list['recetamedica']}</td>                                    
                 <td>                
-                <a class=' btn btn-outline-success btn-sm' data-idcontrato ='{$list['idproducto']}' ><i class='bi bi-plus-circle-dotted'></i></a>                  
+                <a class=' btn btn-success btn-sm' data-idcontrato ='{$list['idproducto']}' ><i class='bi bi-plus-circle-dotted'></i></a>                  
+                <a class='editar-product btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#modal-editarequipo' data-idproducto ='{$list['idproducto']}'><i class='bi bi-pencil-square'></i></a>
                </td>                                             
             </tr>
                 
@@ -57,6 +78,11 @@ if(isset($_GET['op'])){
                 ";
             }
         }
+    }
+
+    if($_GET['op'] == 'get_productos'){
+        $data = $productos->get_productos($_GET['idproducto']);
+        echo json_encode($data);
     }
 }
 
