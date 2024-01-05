@@ -103,11 +103,21 @@ BEGIN
 	
 	INSERT INTO detalleCompras (idproducto, idcompraproducto, cantidad, preciocompra) VALUES
 			(_idproducto, idcompra_g, _cantidad, _preciocompra);
-
+			
+	UPDATE productos SET stock = stock + _cantidad
+	WHERE idproducto = _idproducto;
+	
+	UPDATE productos SET estado = 
+		CASE
+		WHEN stock > 0 THEN 'Disponible'
+		ELSE 'Agotado'
+		END
+	WHERE idproducto = _idproducto;
 
 END $$
 
-CALL spu_compra_registrar()
+CALL spu_compra_registrar(1, 1, 2, 2);
 
-SELECT * FROM usuarios
+SELECT * FROM compraProductos
+SELECT * FROM detalleCompras
 
