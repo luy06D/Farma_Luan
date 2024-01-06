@@ -79,13 +79,13 @@ function mostrarSweetAlert(title, icon, text, timer = 1500) {
     //Mostrar mensaje Eliminar
     function mostrarPreguntaDesactivar() {
       return Swal.fire({
-        title: '¿Está seguro desactivar el registro?',
-        text: "Esta acción se puede activar.",
+        title: '¿Se eliminara este producto de la lista?',
+        text: "Confirmar",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#d33',
         cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Sí, desactivar',
+        confirmButtonText: 'Aceptar',
         cancelButtonText: 'Cancelar',
         footer: 'Farma Luan'
       }).then((result) => {
@@ -118,7 +118,7 @@ function mostrarSweetAlert(title, icon, text, timer = 1500) {
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 2000,
+        timer: 1000,
         timerProgressBar: true,
         didOpen: (toast) => {
           toast.addEventListener('mouseenter', Swal.stopTimer)

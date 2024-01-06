@@ -189,7 +189,7 @@ CALL RealizarPago('Efectivo', 20.00);
 CALL  spu_productos_listar_ventas('amoxi');
 
 -- PROCEDIMINETO agregarProductoALaLista
-CALL agregarProductoALaLista(1, 50);
+CALL agregarProductoALaLista(3, 5);
 CALL agregarProductoALaLista(2, 1);
 
 CALL ListarLiderDetalleVenta();

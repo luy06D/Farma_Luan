@@ -29,7 +29,7 @@ if(isset($_GET['op'])){
                         <td>{$listar['nombreproducto']}</td>
                         <td>{$listar['nombrecategoria']}</td>
                         <td>{$listar['stock']}</td>
-                        <td>{$listar['precio']}</td>
+                        <td>S/.{$listar['precio']}</td>
                         <td>{$listar['fechavencimiento']}</td>
                         <td>{$listar['recetamedica']}</td>                                    
                         <td>                
@@ -64,7 +64,7 @@ if(isset($_GET['op'])){
                     <td>{$listar['nombre_usuario']}</td>
                     <td>{$listar['cantidad']}</td>
                     <td>{$listar['unidadproducto']}</td>
-                    <td>{$listar['preciototal']}</td>
+                    <td>S/.{$listar['preciototal']}</td>
                     <td>
                     <a class='eliminar-product btn btn-danger btn-sm eliminar-fila' data-iddetalleventa ='{$listar['iddetalleventa']}' ><i class='bi bi-trash'></i></a>
                     </td>                                          
