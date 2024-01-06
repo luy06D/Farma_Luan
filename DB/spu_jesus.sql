@@ -18,7 +18,6 @@ BEGIN
     WHERE nombreP = '' OR productos.nombreproducto LIKE CONCAT(nombreP, '%');
 END $$
 
-CALL spu_productos_listar_ventas('par');
 
 DELIMITER $$
 CREATE PROCEDURE spu_listar_productoid(IN p_idproducto INT)
@@ -119,6 +118,39 @@ BEGIN
 END $$
 
 DELIMITER $$
+CREATE PROCEDURE eliminarProducto(
+    IN p_iddetalleventa INT
+)
+BEGIN
+    DECLARE v_idproducto INT;
+    DECLARE v_cantidad INT;
+
+    -- Obtener el idproducto y la cantidad del producto en la lista temporal
+    SELECT idproducto, cantidad INTO v_idproducto, v_cantidad
+    FROM ventaTemporal
+    WHERE iddetalleventa = p_iddetalleventa;
+
+    -- Verificar si el registro existe en la lista temporal
+    IF v_idproducto IS NOT NULL THEN
+        -- Devolver la cantidad al stock de productos
+        UPDATE productos
+        SET stock = stock + v_cantidad
+        WHERE idproducto = v_idproducto;
+
+        -- Eliminar el producto de la lista temporal
+        DELETE FROM ventaTemporal WHERE iddetalleventa = p_iddetalleventa;
+
+        -- Eliminar el producto de la lista de ventas
+        DELETE FROM detalleVentas WHERE iddetalleventa = p_iddetalleventa;
+    END IF;
+END $$
+
+
+
+
+CALL  eliminarProducto(3); -- Cambia 1 por el iddetalleventa que deseas eliminar
+
+DELIMITER $$
 CREATE PROCEDURE RealizarPago(
     IN p_tipopago VARCHAR(20),
     IN p_monto DECIMAL(6,2)
@@ -157,7 +189,7 @@ CALL RealizarPago('Efectivo', 20.00);
 CALL  spu_productos_listar_ventas('amoxi');
 
 -- PROCEDIMINETO agregarProductoALaLista
-CALL agregarProductoALaLista(1, 1);
+CALL agregarProductoALaLista(1, 50);
 CALL agregarProductoALaLista(2, 1);
 
 CALL ListarLiderDetalleVenta();

@@ -75,4 +75,23 @@ class Ventas extends Conexion{
         return $respuesta;
     }
 
+
+    public function eliminar_producto ($datos = []){
+        $respuesta = [
+            "status" => false,
+            "message" => ""
+        ];
+        try{
+            $consulta = $this->connection->prepare("CALL eliminarProducto(?)");
+            $respuesta["status"] = $consulta->execute(array(
+                
+                $datos["iddetalleventa"],
+            ));
+        }
+        catch(Exception $e){
+            $respuesta["message"] = "No se pudo completar la operacion Codigo error: " .$e->getCode();
+        }
+        return $respuesta;
+    }
+
 }
