@@ -33,6 +33,18 @@ public function get_categorias(){
     }
 }
 
+public function get_unidades(){
+    try{
+        $query = $this->connection->prepare("SELECT * FROM unidades");
+        $query->execute();
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+        return $data;
+
+    }catch(Exception $err){
+        die($err->getMessage());
+    }
+}
+
 
 public function productos_registrar ($datos = []){
     $respuesta = [
@@ -40,12 +52,14 @@ public function productos_registrar ($datos = []){
         "message" => ""
     ];
     try{
-        $consulta = $this->connection->prepare("CALL spu_productos_registrar(?,?,?,?,?,?,?,?)");
+        $consulta = $this->connection->prepare("CALL spu_productos_registrar(?,?,?,?,?,?,?,?,?,?)");
         $respuesta["status"] = $consulta->execute(array(
             
             $datos["idcategoria"],
+            $datos["idunidad"],
             $datos["nombreproducto"],
             $datos["descripcion"],
+            $datos["stock"],
             $datos["precio"],            
             $datos["fechaproduccion"],
             $datos["fechavencimiento"],

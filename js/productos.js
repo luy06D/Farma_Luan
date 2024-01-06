@@ -74,6 +74,29 @@ $(document).ready(function(){
           });
         });
       }
+
+      function  get_unidades(){
+
+        const lsUnidades = document.querySelector("#ls-unidades");
+        const parameters = new URLSearchParams();
+        parameters.append("op", "getUnidades");
+    
+        fetch("../controllers/productos.controller.php", {
+          method: 'POST',
+          body: parameters
+        })
+        .then(response => response.json())
+        .then(data => {
+          lsUnidades.innerHTML = "<option value=''>Seleccione</option>";
+          data.forEach(element => {
+            const optionTag = document.createElement("option");
+            optionTag.value = element.idunidad
+            optionTag.text = element.unidadmedida;
+            lsUnidades.appendChild(optionTag);
+            
+          });
+        });
+      }
     
 
     
@@ -81,6 +104,7 @@ $(document).ready(function(){
     // REGISTRAR PRODUCTOS
     function productos_registrar(){
         const idcategoria   = $("#ls-categoria").val().trim();
+        const idunidad      = $("#ls-unidades").val().trim();
         const producto      = $("#nombreProducto").val().trim();
         const precio        = $("#precio").val().trim();
         const fechaproducc  = $("#fechaproduccion").val().trim();
@@ -91,8 +115,10 @@ $(document).ready(function(){
         let sendData = {
             'op'                : 'registrar_producto',
             'idcategoria'       : $("#ls-categoria").val(),
+            'idunidad'          : $("#ls-unidades").val(),
             'nombreproducto'    : $("#nombreProducto").val(),
             'descripcion'       : $("#descripcion").val(),
+            'stock'             : $("#stock").val(),
             'precio'            : $("#precio").val(),
             'fechaproduccion'   : $("#fechaproduccion").val(),
             'fechavencimiento'  : $("#fechavencimiento").val(),
@@ -109,7 +135,7 @@ $(document).ready(function(){
         mostrarPregunta('Productos', '¿Está seguro de realizar la operación?')
         .then((result) => {
             if(result.isConfirmed){
-                if(idcategoria === '' || producto === '' || precio === '' || 
+                if(idcategoria === '' || idunidad === '' || producto === '' || precio === '' || 
                     fechaproducc === '' || fechavencim === '' || numlote === '' ||
                     receta === ''){
                         completeCampos();
@@ -146,8 +172,10 @@ $(document).ready(function(){
             success: function (result){
     
                 $("#ls-categoria").val(result.idcategoria);
+                $("#ls-unidades").val(result.idunidad);
                 $("#nombreProducto").val(result.nombreproducto);
                 $("#descripcion").val(result.descripcion);
+                $("#stock").val(result.stock);
                 $("#precio").val(result.precio);
                 $("#fechaproduccion").val(result.fechaproduccion);
                 $("#fechavencimiento").val(result.fechavencimiento);
@@ -166,6 +194,7 @@ $(document).ready(function(){
 
         dataNew = false;
         $("#modal-newProduct").modal("show");
+        $("#stock").prop("disabled", true);
 
 
     }
@@ -181,7 +210,9 @@ $(document).ready(function(){
         $("#guardarProducto").removeClass("btn btn-warning");
         $("#guardarProducto").addClass("btn btn-primary");
         $("#form-productos")[0].reset();
+        $("#stock").prop("disabled", false );
         dataNew =true;
+
 
     }
 
@@ -210,4 +241,5 @@ $(document).ready(function(){
 
     productos_listar();
     get_categorias();
+    get_unidades();
 })
