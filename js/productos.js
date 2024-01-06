@@ -23,6 +23,27 @@ $(document).ready(function(){
                     pageLength: 10, 
                     lengthChange: false,
                     order: [[0, 'desc']],
+                    columnDefs:[
+                        {
+                            targets: [0],
+                            visible: false,
+                        },
+                        {
+                            responsivePriority: 1,
+                            targets: [5],
+                            render: function (data, type, row){
+                                if(type === 'display'){
+                                    if(data === "Agotado"){
+                                        return '<span class="badge bg-danger text-white">Agotado</span>';  
+                                }else{
+                                    return '<span class="badge bg-success text-white">Disponible</span>';  
+
+                                }
+                                }
+                                return data
+                            }
+                        }
+                    ]
             
 
                 })
@@ -170,10 +191,16 @@ $(document).ready(function(){
         window.open(`../reports/inventario.report.php`, `_blank`);
     }
 
-    // Ontener el idproducto de la lista
+    // Obtener el idproducto de la lista
     $("#tabla-producto tbody").on("click", ".editar-product", function (){
         idproducto = $(this).data("idproducto");
         obtenerProducto(idproducto);
+    })
+
+      // Obtener el idproducto de la lista para compras
+      $("#tabla-producto tbody").on("click", ".compras", function (){
+        idproducto = $(this).data("idproducto");
+        $("#modal-stock").modal("show");
     })
     
     $("#abrir-modal-registro").click(abriModalRegistro);

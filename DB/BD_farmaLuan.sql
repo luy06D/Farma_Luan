@@ -10,20 +10,25 @@ apellidos	VARCHAR(30)	NOT NULL
 )
 ENGINE=INNODB;
 
+INSERT INTO personas (nombres, apellidos) VALUES
+('Luis David','Cusi Gonzales');
 
 CREATE TABLE usuarios
 (
 idusuario	INT AUTO_INCREMENT PRIMARY KEY,
+idpersona	INT 		NOT NULL,
 nomusuario	VARCHAR(20) 	NOT NULL,
 claveacceso	VARCHAR(100)	NOT NULL,
 estado		CHAR(1)		NOT NULL DEFAULT '1',
-nivelacceso	VARCHAR(20)     NOT NULL,
-CONSTRAINT uk_nom_usu UNIQUE (nomusuario)
+nivelacceso	VARCHAR(20)     NOT NULL, 
+CONSTRAINT uk_nom_usu UNIQUE (nomusuario),
+CONSTRAINT fk_idp_usu FOREIGN KEY (idpersona) REFERENCES personas (idpersona)
 )
 ENGINE=INNODB;
 
-INSERT INTO usuarios (nomusuario, claveacceso, nivelacceso) VALUES
-('admin','123','administrador');
+INSERT INTO usuarios (idpersona, nomusuario, claveacceso, nivelacceso) VALUES
+	(1, 'Luy_06', '060903', 'admin');
+
 
 CREATE TABLE categorias
 (
@@ -61,12 +66,13 @@ CONSTRAINT ck_num_pro CHECK (numlote > 0)
 )
 ENGINE = INNODB;
 
+
 INSERT INTO productos (idcategoria, nombreproducto, descripcion, stock, precio, fechaproduccion, fechavencimiento, numlote, recetamedica)VALUES 
 (1, 'Paracetamol', 'Analgesia para aliviar el dolor', 10, 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere'),
 (2, 'Amoxicilina', 'Antibiótico para tratar infecciones', 10,  12.99, '2022-02-01', '2025-02-01', 54321, 'Requiere'),
 (3, 'Ibuprofeno', 'Antiinflamatorio para reducir la inflamación',10,  7.50, '2022-03-01', '2026-03-01', 67890, 'No requiere');
 
-SELECT * FROM productos ;
+
 
 CREATE TABLE compraProductos
 (
@@ -86,7 +92,7 @@ idproducto 	 INT 		NOT NULL,
 idcompraproducto INT 		NOT NULL,
 cantidad 	 SMALLINT 	NOT NULL,
 preciocompra	 DECIMAL(7,2)	NOT NULL,
-fechadetalleC	 DATE 		NOT NULL,
+fechadetalleC	 DATE 		NOT NULL DEFAULT NOW(),
 CONSTRAINT fk_idpro_det FOREIGN KEY (idproducto) REFERENCES productos (idproducto),
 CONSTRAINT fk_idc_det FOREIGN KEY (idcompraproducto) REFERENCES compraProductos (idcompraproducto)
 )

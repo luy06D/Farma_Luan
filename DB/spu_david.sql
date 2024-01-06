@@ -84,4 +84,40 @@ WHERE PRO.idproducto = _idproducto;
 END $$
 
 
+-- REGISTRAR COMPRAS
+DELIMITER $$
+CREATE PROCEDURE spu_compra_registrar
+(
+IN _idusuario INT,
+IN _idproducto INT,
+IN _cantidad SMALLINT,
+IN _preciocompra DECIMAL(7,2)
+)
+BEGIN 
+	DECLARE idcompra_g INT;
+	
+	INSERT INTO compraProductos (idusuario) VALUES
+		(_idusuario);
+		
+	SELECT LAST_INSERT_ID() INTO idcompra_g;
+	
+	INSERT INTO detalleCompras (idproducto, idcompraproducto, cantidad, preciocompra) VALUES
+			(_idproducto, idcompra_g, _cantidad, _preciocompra);
+			
+	UPDATE productos SET stock = stock + _cantidad
+	WHERE idproducto = _idproducto;
+	
+	UPDATE productos SET estado = 
+		CASE
+		WHEN stock > 0 THEN 'Disponible'
+		ELSE 'Agotado'
+		END
+	WHERE idproducto = _idproducto;
+
+END $$
+
+CALL spu_compra_registrar(1, 1, 2, 2);
+
+SELECT * FROM compraProductos
+SELECT * FROM detalleCompras
 

@@ -48,10 +48,6 @@
               <div class="tab-content pt-2" id="borderedTabContent">
                 <div class="tab-pane fade show active" id="bordered-home" role="tabpanel" aria-labelledby="home-tab">
                   <!-- SECCION BUSCAR PRODUCTO  -->
-                  <button type="button" id="abrir-modal-registro" class="btn btn-primary btn-md mb-3 mt-3 shadow-lg" data-bs-toggle="modal" data-bs-target="#modal-newProduct">
-                        Nuevo producto
-                  </button>
-          
 
                   <section class="section mt-2">
                     <div class="row">
@@ -62,6 +58,9 @@
                             <h5 class="card-title">Lista de productos</h5>
                             <div class="mb-3 row">
                               <div class="col-lg-6 col-12"> 
+                              <button type="button" id="abrir-modal-registro" class="btn btn-primary btn-md mb-3 mt-3 shadow-lg" data-bs-toggle="modal" data-bs-target="#modal-newProduct">
+                              Nuevo producto <i class="bi bi-plus-lg"></i>
+                              </button>
                               <button id="reporte-inventario" class="btn btn-danger" type="button">Generar reporte <i class="bi bi-file-earmark-pdf"></i></button>                                 
                              
                                 <!-- <button type="button" id="abrir-modal-recuperar" class="btn btn-primary btn-md ml-2 mr-2" data-bs-toggle="modal" data-bs-target="#modal-RecuperarEquipo">
@@ -99,7 +98,7 @@
                     </div>
                   </section>
 
-                  <!-- Modal Registrar Equipo -->
+                  <!-- Modal Registrar un producto-->
                   <div class="modal fade" id="modal-newProduct" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl" role="document">
                       <div class="modal-content">
@@ -179,23 +178,23 @@
                       </div>
                     </div>
                   </div> 
-                  
+
 
                   <!-- Modal agregar a stock -->
                   <div class="modal fade" id="modal-stock" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
                       <div class="modal-content">
-                        <div class="modal-header bg-primary" id="modal-registro-header">
-                          <h5 class="modal-title text-white" id="modalTitleId">Agregar a stock</h5>
+                        <div class="modal-header bg-success" id="modal-registro-header">
+                          <h5 class="modal-title text-white" id="modalTitleId">Registrar compra</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                           <form id="form-equipos-md">
                             <div class="row">
                               <div class="col-lg-6" style="display: none;">
-                                <label for="item-md" class="col-form-label">Item:</label>
+                                <label for="producto-c" class="col-form-label">Producto:</label>
                                 <div class="col-sm-12">
-                                  <input type="text" class="form-control" id="item-md" readonly>
+                                  <input type="text" class="form-control" id="producto-c" readonly>
                                 </div>
                               </div>
                               <div class="col-lg-6" style="display: none;">
@@ -205,6 +204,18 @@
                                 </div>
                               </div>
                               <div class="col-lg-4">
+                                <label for="cantidad-c" class="col-form-label">Cantidad:</label>
+                                <div class="col-sm-12">
+                                  <input type="number" class="form-control" id="cantidad-c" placeholder="digité cantidad">
+                                </div>
+                              </div>
+                              <div class="col-lg-4">
+                                <label for="precio-c" class="col-form-label">Precio compra:</label>
+                                <div class="col-sm-12">
+                                  <input type="number" class="form-control" id="precio-c" placeholder="S/.">
+                                </div>
+                              </div>
+                              <!-- <div class="col-lg-4">
                                 <label for="tipocomprobante" class="col-form-label">Tipo Comprobante:</label>
                                 <div class="col-sm-12">
                                   <select class="form-select" id="tipocomprobante">
@@ -213,27 +224,17 @@
                                     <option value="Factura">Factura</option>
                                   </select>
                                 </div>
-                              </div>
+                              </div> -->
 
-                              <div class="col-lg-4">
+                              <!-- <div class="col-lg-4">
                                 <label for="ncomprobante-md" class="col-form-label">N° comprobante:</label>
                                 <div class="col-sm-12">
                                   <input type="number" class="form-control" id="ncomprobante-md" placeholder="digité número">
                                 </div>
-                              </div>
+                              </div> -->
 
-                              <div class="col-lg-4">
-                                <label for="precio-md" class="col-form-label">Precio compra:</label>
-                                <div class="col-sm-12">
-                                  <input type="number" class="form-control" id="precio-md" placeholder="S/.">
-                                </div>
-                              </div>
-                              <div class="col-lg-4">
-                                <label for="stok-md" class="col-form-label">Cantidad:</label>
-                                <div class="col-sm-12">
-                                  <input type="number" class="form-control" id="stok-md" placeholder="digité cantidad">
-                                </div>
-                              </div>
+                             
+                             
                               <div class="col-lg-4">
                                 <label for="monto-md" class="col-form-label">Monto total:</label>
                                 <div class="col-sm-12">
@@ -244,7 +245,7 @@
                           </form>
                         </div>
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-primary" id="agregarstockequipo">Agregar</button>
+                          <button type="button" class="btn btn-success" id="agregarstockequipo">Agregar</button>
                           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                         </div>
                       </div>
