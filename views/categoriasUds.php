@@ -52,10 +52,10 @@
             <div class="card">
                 <div class="card-body">
                 <h5 class="card-title">Lista Unidades de medida</h5>
-                <table class="table ">
+                <table class="table" id="table-unidades">
                     <thead>
                     <tr>
-                        <th scope="col">#</th>
+                        <th scope="col">Item</th>
                         <th scope="col">Unidades</th>
                         <th scope="col">Operaciones</th>
                     </tr>
@@ -97,7 +97,7 @@
   <!-- Incluye Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="../js/alertSweet.js"></script>
-  <script src="../js/productos.js"></script>
+  <script src="../js/categoriasUds.js"></script>
   
 
 
