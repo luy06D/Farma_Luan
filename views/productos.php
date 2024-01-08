@@ -82,7 +82,7 @@
                                     <th>Stock</th>
                                     <th>Precio</th>
                                     <th>Estado</th>
-                                    <th>Fecha Producción</th>
+                                    <th>Unidad </th>
                                     <th>Fecha Vencimiento</th>
                                     <th>Receta Médica</th>                                    
                                     <th>Operación</th>
@@ -109,20 +109,18 @@
                         </div>
                         <div class="modal-body">
                           <form id="form-productos">
-                            <div class="row">
-                              <div class="col-lg-4 mt-2">
-                                <label for="ls-categoria" class="col-form-label">Categoria:</label>
-                                <div class="col-sm-12">
-                                  <select class="form-select" id="ls-categoria">
-                                    <option selected>Seleccione</option>
-                                  </select>
-                                </div>
-                              </div>
+                            <div class="row">     
 
                               <div class="col-lg-4 mt-2">
                                 <label for="nombreProducto" class="col-form-label">Nombre Producto:</label>
                                 <div class="col-sm-12">
                                   <input type="text" class="form-control" id="nombreProducto" placeholder="Escriba aquí">
+                                </div>
+                              </div>
+                              <div class="col-lg-4 mt-2">
+                                <label for="nombreCategoria" class="col-form-label">Categoria:</label>
+                                <div class="col-sm-12">
+                                  <input type="text" class="form-control" id="nombreCategoria" placeholder="Escriba aquí">
                                 </div>
                               </div>
                               <div class="col-lg-4 mt-2">
@@ -146,22 +144,15 @@
                                 </div>
                               </div>
                               <div class="col-lg-4 mt-2">
-                                <label for="fechaproduccion" class="col-form-label">Fecha Producción:</label>
+                                <label for="fechaproduccion" class="col-form-label">Fecha Producción (Opcional):</label>
                                 <div class="col-sm-12">
                                   <input type="date" class="form-control" id="fechaproduccion" >
                                 </div>
                               </div>                              
                               <div class="col-lg-4 mt-2">
-                                <label for="fechavencimiento" class="col-form-label">Fecha Vencimiento:</label>
+                                <label for="fechavencimiento" class="col-form-label">Fecha Vencimiento (Opcional):</label>
                                 <div class="col-sm-12">
                                   <input type="date" class="form-control" id="fechavencimiento" >
-                                </div>
-                              </div>
-
-                              <div class="col-lg-4 mt-2">
-                                <label for="numlote" class="col-form-label">N° lote:</label>
-                                <div class="col-sm-12">
-                                  <input type="number" class="form-control" id="numlote" placeholder="Escriba aquí" >
                                 </div>
                               </div>
 

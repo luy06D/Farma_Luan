@@ -7,34 +7,34 @@ DELIMITER $$
 CREATE PROCEDURE spu_productos_listar()
 BEGIN 
 
-SELECT 	PRO.idproducto, PRO.nombreproducto, CA.nombrecategoria,
-	PRO.stock,PRO.estado, PRO.precio, PRO.fechaproduccion,
-	PRO.fechavencimiento, PRO.recetamedica
+SELECT 	PRO.idproducto, PRO.nombreproducto, nombrecategoria,
+	PRO.stock,PRO.estado, PRO.precio, unidadmedida,
+	PRO.fechavencimiento, PRO.fechaproduccion, PRO.recetamedica
 FROM productos PRO
-INNER JOIN categorias CA ON CA.idcategoria = PRO.idcategoria;
+INNER JOIN unidades UN ON UN.idunidad = PRO.idunidad;
 END $$
 
 CALL spu_productos_listar()
+
 
 -- REGISTRAR PRODUCTOS
 DELIMITER $$
 CREATE PROCEDURE spu_productos_registrar
 (
-IN _idcategoria INT,
 IN _idunidad	INT,
-IN _nombreproducto VARCHAR(40),
+IN _nombreproducto VARCHAR(50),
+IN _nombrecategoria VARCHAR(50),
 IN _descripcion	    VARCHAR(150),
 IN _stock	    SMALLINT,
 IN _precio	    SMALLINT,
 IN _fechaproduccion	DATE,
 IN _fechavencimiento	DATE,
-IN _numlote		INT,
 IN _recetamedica	VARCHAR(15)
 )
 BEGIN 
 
-INSERT INTO productos (idcategoria, idunidad, nombreproducto, descripcion, stock, precio, fechaproduccion, fechavencimiento, numlote, recetamedica) VALUES
-		(_idcategoria, _idunidad, _nombreproducto, _descripcion, _stock, _precio, _fechaproduccion, _fechavencimiento, _numlote, _recetamedica);
+INSERT INTO productos (idunidad, nombreproducto, nombrecategoria, descripcion, stock, precio, fechaproduccion, fechavencimiento, recetamedica) VALUES
+		(_idunidad, _nombreproducto, _nombrecategoria, _descripcion, _stock, _precio, _fechaproduccion, _fechavencimiento, _recetamedica);
 
 	UPDATE productos SET estado = 
         CASE
@@ -51,26 +51,25 @@ DELIMITER $$
 CREATE PROCEDURE spu_productos_update
 (
 IN _idproducto	INT,
-IN _idcategoria INT,
-IN _nombreproducto VARCHAR(40),
+IN _idunidad    INT,
+IN _nombreproducto VARCHAR(50),
+IN _nombrecategoria VARCHAR(50),
 IN _descripcion	    VARCHAR(150),
-IN _precio	    DECIMAL(5,2),
+IN _precio	    SMALLINT,
 IN _fechaproduccion	DATE,
 IN _fechavencimiento	DATE,
-IN _numlote		INT,
 IN _recetamedica	VARCHAR(15)
-
 )
 BEGIN 
 
 	UPDATE productos SET
-	idcategoria 	= _idcategoria,
+	idunidad	= _idunidad,	
 	nombreproducto 	= _nombreproducto,
-	descripcion 	= _descripcion,
+	nombrecategoria = _nombrecategoria,
+	descripcion	= _descripcion,
 	precio 		= _precio,
 	fechaproduccion = _fechaproduccion,
-	fechavencimiento = _fechavencimiento,
-	numlote 	= _numlote,
+	fechavencimiento = _fechavencimiento,	
 	recetamedica 	= _recetamedica	
 	WHERE idproducto = _idproducto;
 
@@ -84,18 +83,19 @@ DELIMITER $$
 CREATE PROCEDURE spu_getProductos(IN _idproducto INT)
 BEGIN
 
-SELECT 	PRO.idproducto, PRO.stock, PRO.nombreproducto,CA.idcategoria, UN.idunidad,
+SELECT 	PRO.idproducto, PRO.stock, PRO.nombreproducto, PRO.nombrecategoria, UN.idunidad,
 	PRO.stock,PRO.estado, PRO.precio, PRO.fechaproduccion,
-	PRO.fechavencimiento, PRO.numlote, PRO.recetamedica, PRO.descripcion
+	PRO.fechavencimiento, PRO.recetamedica, PRO.descripcion
 FROM productos PRO
-INNER JOIN categorias CA ON CA.idcategoria = PRO.idcategoria
 INNER JOIN unidades UN ON UN.idunidad = PRO.idunidad
 WHERE PRO.idproducto = _idproducto;
 
 END $$
 
+CALL spu_getProductos(13)
 
--- REGISTRAR COMPRAS
+
+-- REGISTRAR COMPRAS >>>>>>>>>>>>>>>>>>> falta
 DELIMITER $$
 CREATE PROCEDURE spu_compra_registrar
 (
@@ -130,5 +130,5 @@ END $$
 CALL spu_compra_registrar(1, 1, 2, 2);
 
 
-
+SELECT * FROM unidades
 

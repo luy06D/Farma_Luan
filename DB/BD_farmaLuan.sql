@@ -28,10 +28,8 @@ CONSTRAINT fk_idp_usu FOREIGN KEY (idpersona) REFERENCES personas (idpersona)
 ENGINE=INNODB;
 
 INSERT INTO usuarios (idpersona, nomusuario, claveacceso, nivelacceso) VALUES
-	(1, 'Jesu_04', '200418', 'adminJ'),
-	(2, 'Luy_06', '060903', 'adminL');
-
-
+	(1, 'Jesu_04', '200418', 'admin'),
+	(2, 'Luy_06', '060903', 'admin');
 
 
 CREATE TABLE unidades
@@ -53,44 +51,41 @@ INSERT INTO unidades (unidadmedida) VALUES
 CREATE TABLE productos 
 (
 idproducto		INT AUTO_INCREMENT PRIMARY KEY,
+idunidad		INT 		NOT NULL,
 nombreproducto		VARCHAR(50) 	NOT NULL,
 nombrecategoria		VARCHAR(50)     NOT NULL,
-idcategoria		INT		NOT NULL,
-idunidad		INT 		NOT NULL,
-nombreproducto		VARCHAR(40) 	NOT NULL,
 descripcion		VARCHAR(150)	NULL,
 stock			SMALLINT	NOT NULL DEFAULT 0 ,
 precio			DECIMAL(5,2)	NOT NULL,
 fechaproduccion		DATE		NULL,
-fechavencimiento	DATE		NULL,
-numlote			INT		NOT NULL,	
+fechavencimiento	DATE		NULL,	
 recetamedica		VARCHAR(15)	NOT NULL, -- REQUIERE , NO REQUIERE
 estado 			VARCHAR(10)	NOT NULL DEFAULT 'Agotado',
-
-CONSTRAINT fk_idc_pro FOREIGN KEY (idcategoria) REFERENCES categorias(idcategoria),
+create_at		DATETIME 	NOT NULL DEFAULT NOW(),
+update_at		DATETIME	NULL,
+inactive_at		DATETIME 	NULL,
 CONSTRAINT fk_idu_pro FOREIGN KEY (idunidad) REFERENCES unidades(idunidad),
 CONSTRAINT uk_nom_pro UNIQUE(nombreproducto),
-CONSTRAINT uk_num_pro UNIQUE(numlote),
 CONSTRAINT ck_pre_pro CHECK (precio > 0)
 )
 ENGINE = INNODB;
 
+INSERT INTO productos (idunidad, nombreproducto, nombrecategoria, descripcion, stock, precio, fechaproduccion, fechavencimiento, recetamedica)VALUES 
+(1, 'Paracetamol', 'Paracetamol', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 'No requiere'),
+(2, 'Amoxicilina', 'Amoxicilina', 'Antibiótico para tratar infecciones', 100, 12.99, '2022-02-01', '2025-02-01', 'Requiere'),
+(3, 'Ibuprofeno', 'Ibuprofeno', 'Antiinflamatorio para reducir la inflamación', 100, 7.50, '2022-03-01', '2026-03-01', 'No requiere'),
+(4, 'GriPachek', 'GriPachek', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 'No requiere'),
 
-INSERT INTO productos ( nombreproducto, nombrecategoria, descripcion, stock, precio, fechaproduccion, fechavencimiento, numlote, recetamedica)VALUES 
-('Paracetamol', 'Paracetamol', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere'),
-('Amoxicilina', 'Amoxicilina', 'Antibiótico para tratar infecciones', 100,  12.99, '2022-02-01', '2025-02-01', 54321, 'Requiere'),
-('Ibuprofeno', 'Ibuprofeno', 'Antiinflamatorio para reducir la inflamación',100,  7.50, '2022-03-01', '2026-03-01', 67890, 'No requiere'),
-('GriPachek', 'GriPachek', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere'),
+(1, 'Cetamol', 'Paracetamol', 'Antibiótico para tratar infecciones', 100, 12.99, '2022-02-01', '2025-02-01', 'Requiere'),
+(2, 'Cilina', 'Amoxicilina', 'Antiinflamatorio para reducir la inflamación', 10, 7.50, '2022-03-01', '2026-03-01', 'No requiere'),
+(3, 'Profeno', 'Ibuprofeno', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 'No requiere'),
+(4, 'Pachek', 'GriPachek', 'Antibiótico para tratar infecciones', 100, 12.99, '2022-02-01', '2025-02-01', 'Requiere'),
 
-('Cetamol', 'Paracetamol', 'Antibiótico para tratar infecciones', 100,  12.99, '2022-02-01', '2025-02-01', 54321, 'Requiere'),
-('Cilina', 'Amoxicilina', 'Antiinflamatorio para reducir la inflamación',10,  7.50, '2022-03-01', '2026-03-01', 67890, 'No requiere'),
-('Profeno', 'Ibuprofeno', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere'),
-('Pachek', 'GriPachek', 'Antibiótico para tratar infecciones', 100,  12.99, '2022-02-01', '2025-02-01', 54321, 'Requiere'),
+(1, 'Ceta', 'Paracetamol', 'Antiinflamatorio para reducir la inflamación', 100, 7.50, '2022-03-01', '2026-03-01', 'No requiere'),
+(2, 'Moxilona', 'Amoxicilina', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 'No requiere'),
+(3, 'Uprofeno', 'Ibuprofeno', 'Antibiótico para tratar infecciones', 100, 12.99, '2022-02-01', '2025-02-01', 'Requiere'),
+(4, 'Ipachek', 'GriPachek', 'Antiinflamatorio para reducir la inflamación', 100, 7.50, '2022-03-01', '2026-03-01', 'No requiere');
 
-('Ceta', 'Paracetamol', 'Antiinflamatorio para reducir la inflamación',100,  7.50, '2022-03-01', '2026-03-01', 67890, 'No requiere'),
-('Moxilona', 'Amoxicilina', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere'),
-('Uprofeno', 'Ibuprofeno', 'Antibiótico para tratar infecciones', 100,  12.99, '2022-02-01', '2025-02-01', 54321, 'Requiere'),
-('Ipachek', 'GriPachek',' Antiinflamatorio para reducir la inflamación',100,  7.50, '2022-03-01', '2026-03-01', 67890, 'No requiere');
 
 
 CREATE TABLE compraProductos

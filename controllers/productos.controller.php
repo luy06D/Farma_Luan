@@ -7,16 +7,15 @@ if(isset($_POST['op'])){
     $productos = new Productos();
 
     if($_POST['op'] == 'registrar_producto'){
-        $data = [
-            "idcategoria"       => $_POST['idcategoria'],
+        $data = [            
             "idunidad"          => $_POST['idunidad'],
             "nombreproducto"    => $_POST['nombreproducto'],
+            "nombrecategoria"    => $_POST['nombrecategoria'],
             "descripcion"       => $_POST['descripcion'],
             "stock"             => $_POST['stock'],
             "precio"            => $_POST['precio'],
             "fechaproduccion"   => $_POST['fechaproduccion'],
-            "fechavencimiento"  => $_POST['fechavencimiento'],
-            "numlote"           => $_POST['numlote'],
+            "fechavencimiento"  => $_POST['fechavencimiento'],            
             "recetamedica"      => $_POST['recetamedica'],
         ];
 
@@ -27,14 +26,14 @@ if(isset($_POST['op'])){
     
     if($_POST['op'] == 'actualizar_producto'){
         $data = [
-            "idproducto"       => $_POST['idproducto'],
-            "idcategoria"       => $_POST['idcategoria'],
+            "idproducto"        => $_POST['idproducto'],     
+            "idunidad"           => $_POST['idunidad'],                    
             "nombreproducto"    => $_POST['nombreproducto'],
+            "nombrecategoria"   => $_POST['nombrecategoria'],
             "descripcion"       => $_POST['descripcion'],
             "precio"            => $_POST['precio'],
             "fechaproduccion"   => $_POST['fechaproduccion'],
-            "fechavencimiento"  => $_POST['fechavencimiento'],
-            "numlote"           => $_POST['numlote'],
+            "fechavencimiento"  => $_POST['fechavencimiento'],            
             "recetamedica"      => $_POST['recetamedica'],
         ];
 
@@ -42,11 +41,6 @@ if(isset($_POST['op'])){
         echo json_encode($respuesta);
     }
 
-       
-    if($_POST['op'] == 'getCategorias'){
-
-        echo json_encode($productos->get_categorias());
-    }
 
     if($_POST['op'] == 'getUnidades'){
 
@@ -72,7 +66,7 @@ if(isset($_GET['op'])){
                 <td>{$list['stock']}</td>
                 <td>S/.{$list['precio']}</td>
                 <td>{$list['estado']}</td>
-                <td>{$list['fechaproduccion']}</td>
+                <td>{$list['unidadmedida']}</td>
                 <td>{$list['fechavencimiento']}</td>
                 <td>{$list['recetamedica']}</td>                                    
                 <td>                

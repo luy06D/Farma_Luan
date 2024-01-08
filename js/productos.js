@@ -20,7 +20,7 @@ $(document).ready(function(){
                         url: '../js/Spanish.json'
                     },
                     responsive: true,
-                    pageLength: 10, 
+                    pageLength: 8, 
                     lengthChange: false,
                     order: [[0, 'desc']],
                     columnDefs:[
@@ -37,7 +37,6 @@ $(document).ready(function(){
                                         return '<span class="badge bg-danger text-white">Agotado</span>';  
                                 }else{
                                     return '<span class="badge bg-success text-white">Disponible</span>';  
-
                                 }
                                 }
                                 return data
@@ -52,28 +51,6 @@ $(document).ready(function(){
         })
     }
 
-    function  get_categorias(){
-
-        const lsCategorias = document.querySelector("#ls-categoria");
-        const parameters = new URLSearchParams();
-        parameters.append("op", "getCategorias");
-    
-        fetch("../controllers/productos.controller.php", {
-          method: 'POST',
-          body: parameters
-        })
-        .then(response => response.json())
-        .then(data => {
-          lsCategorias.innerHTML = "<option value=''>Seleccione</option>";
-          data.forEach(element => {
-            const optionTag = document.createElement("option");
-            optionTag.value = element.idcategoria
-            optionTag.text = element.nombrecategoria;
-            lsCategorias.appendChild(optionTag);
-            
-          });
-        });
-      }
 
       function  get_unidades(){
 
@@ -103,26 +80,23 @@ $(document).ready(function(){
 
     // REGISTRAR PRODUCTOS
     function productos_registrar(){
-        const idcategoria   = $("#ls-categoria").val().trim();
         const idunidad      = $("#ls-unidades").val().trim();
         const producto      = $("#nombreProducto").val().trim();
+        const categoria      = $("#nombreCategoria").val().trim();
+        const unidades     = $("#ls-unidades").val().trim();
         const precio        = $("#precio").val().trim();
-        const fechaproducc  = $("#fechaproduccion").val().trim();
-        const fechavencim   = $("#fechavencimiento").val().trim();
-        const numlote       = $("#numlote").val().trim();
         const receta        = $("#ls-receta").val().trim();        
 
         let sendData = {
             'op'                : 'registrar_producto',
-            'idcategoria'       : $("#ls-categoria").val(),
             'idunidad'          : $("#ls-unidades").val(),
             'nombreproducto'    : $("#nombreProducto").val(),
+            'nombrecategoria'    : $("#nombreCategoria").val(),
             'descripcion'       : $("#descripcion").val(),
             'stock'             : $("#stock").val(),
             'precio'            : $("#precio").val(),
             'fechaproduccion'   : $("#fechaproduccion").val(),
-            'fechavencimiento'  : $("#fechavencimiento").val(),
-            'numlote'           : $("#numlote").val(),
+            'fechavencimiento'  : $("#fechavencimiento").val(),            
             'recetamedica'      : $("#ls-receta").val(),            
         };
 
@@ -135,9 +109,8 @@ $(document).ready(function(){
         mostrarPregunta('Productos', '¿Está seguro de realizar la operación?')
         .then((result) => {
             if(result.isConfirmed){
-                if(idcategoria === '' || idunidad === '' || producto === '' || precio === '' || 
-                    fechaproducc === '' || fechavencim === '' || numlote === '' ||
-                    receta === ''){
+                if(idunidad === '' || producto === '' || precio === '' || 
+                   receta === '' || categoria === '' || unidades === ''){
                         completeCampos();
                     }else{
                         toastFinalizar("Operación exitosa");
@@ -171,15 +144,14 @@ $(document).ready(function(){
             dataType: 'JSON',
             success: function (result){
     
-                $("#ls-categoria").val(result.idcategoria);
                 $("#ls-unidades").val(result.idunidad);
                 $("#nombreProducto").val(result.nombreproducto);
+                $("#nombreCategoria").val(result.nombrecategoria);
                 $("#descripcion").val(result.descripcion);
                 $("#stock").val(result.stock);
                 $("#precio").val(result.precio);
                 $("#fechaproduccion").val(result.fechaproduccion);
-                $("#fechavencimiento").val(result.fechavencimiento);
-                $("#numlote").val(result.numlote);
+                $("#fechavencimiento").val(result.fechavencimiento);                
                 $("#ls-receta").val(result.recetamedica);
             }
         });
@@ -240,6 +212,5 @@ $(document).ready(function(){
 
 
     productos_listar();
-    get_categorias();
     get_unidades();
 })

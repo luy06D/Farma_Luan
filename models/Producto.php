@@ -22,17 +22,6 @@ public function productos_listar(){
 }
 
 
-public function get_categorias(){
-    try{
-        $query = $this->connection->prepare("SELECT * FROM categorias");
-        $query->execute();
-        $data = $query->fetchAll(PDO::FETCH_ASSOC);
-        return $data;
-
-    }catch(Exception $err){
-        die($err->getMessage());
-    }
-}
 
 public function get_unidades(){
     try{
@@ -53,18 +42,17 @@ public function productos_registrar ($datos = []){
         "message" => ""
     ];
     try{
-        $consulta = $this->connection->prepare("CALL spu_productos_registrar(?,?,?,?,?,?,?,?,?,?)");
+        $consulta = $this->connection->prepare("CALL spu_productos_registrar(?,?,?,?,?,?,?,?,?)");
         $respuesta["status"] = $consulta->execute(array(
             
-            $datos["idcategoria"],
             $datos["idunidad"],
             $datos["nombreproducto"],
+            $datos["nombrecategoria"],
             $datos["descripcion"],
             $datos["stock"],
             $datos["precio"],            
             $datos["fechaproduccion"],
-            $datos["fechavencimiento"],
-            $datos["numlote"],
+            $datos["fechavencimiento"],        
             $datos["recetamedica"]
         ));
     }
@@ -84,13 +72,13 @@ public function productos_actualizar ($datos = []){
         $respuesta["status"] = $consulta->execute(array(
             
             $datos["idproducto"],
-            $datos["idcategoria"],
+            $datos["idunidad"],            
             $datos["nombreproducto"],
-            $datos["descripcion"],
+            $datos["nombrecategoria"],
+            $datos["descripcion"],            
             $datos["precio"],            
             $datos["fechaproduccion"],
-            $datos["fechavencimiento"],
-            $datos["numlote"],
+            $datos["fechavencimiento"],        
             $datos["recetamedica"]
         ));
     }
