@@ -8,16 +8,36 @@ BEGIN
     SELECT 
         productos.idproducto, 
         productos.nombreproducto,		
-        categorias.nombrecategoria,
+        productos.nombrecategoria,
         productos.stock, 
         productos.precio,
         productos.fechavencimiento, 
         productos.recetamedica
     FROM productos 
-    INNER JOIN categorias ON categorias.idcategoria = productos.idcategoria
     WHERE nombreP = '' OR productos.nombreproducto LIKE CONCAT(nombreP, '%');
 END $$
 
+
+CALL  spu_productos_listar_ventas('paracetam');
+
+DELIMITER $$
+CREATE PROCEDURE spu_productos_categoria(IN categoriaP VARCHAR(50))
+BEGIN
+    SELECT 
+        idproducto, 
+        nombreproducto,		
+        nombrecategoria,
+        descripcion,
+        stock, 
+        precio,
+        fechavencimiento, 
+        recetamedica
+    FROM productos
+    WHERE nombrecategoria = categoriaP AND nombreproducto <> categoriaP;
+END $$
+
+
+CALL spu_productos_categoria ('paracetamol');
 
 DELIMITER $$
 CREATE PROCEDURE spu_listar_productoid(IN p_idproducto INT)
@@ -186,7 +206,7 @@ END $$
 CALL RealizarPago('Efectivo', 20.00);
 
 -- PROCEDIMINETO spu_productos_listar_ventas
-CALL  spu_productos_listar_ventas('amoxi');
+CALL  spu_productos_listar_ventas('p');
 
 -- PROCEDIMINETO agregarProductoALaLista
 CALL agregarProductoALaLista(3, 5);

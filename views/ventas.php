@@ -45,9 +45,6 @@
       display: block;
     }
 
-    .id-lista {
-    visibility: hidden;
-    }
 
     #stock {
         white-space: nowrap; 
@@ -57,6 +54,10 @@
     }
 
 
+    #tabla_producto_venta {
+        max-height: 100px; /* Puedes ajustar la altura máxima según tus necesidades */
+        overflow-y: auto;
+    }
 
   </style>
   
@@ -93,23 +94,56 @@
               <div class="tab-content pt-2" id="borderedTabContent">
                 <div class="tab-pane fade show active" id="bordered-home" role="tabpanel" aria-labelledby="home-tab">
                  <section class="section mt-3">
+
+
                   <div class="row">
                     <div class="col-lg-12">
-                      <div class="card text-center">
+                      <div class="card ">
                           <div class="card-body">
-                              <h5 class="card-title">Realizar Venta</h5>
+                            <button id="iniciar" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                              Launch demo modal
+                            </button>
+                              <h5 class="card-title text-center" >Realizar Venta</h5>
 
                               <div class="form-floating col-md-4 mx-auto position-relative">
-                                <input type="text" id="buscar-producto" class="form-control nota-practica text-center" placeholder="" min="0" max="20" >
-                                <span id="clear-input" class="clear-icon">&#10006;</span>
-                                <label for="floatingInput">Buscar</label>
+
+                                        <input type="text" id="buscar-producto" class="form-control nota-practica text-center" placeholder="" min="0" max="20">
+                                        <span id="clear-input" class="clear-icon">&#10006;</span>
+                                        <label for="floatingInput">Buscar</label>
                                 
                               </div>
 
-                              <form class="row g-3 mt-4">
-                              <table id="tabla_producto_venta" class="table table-striped table-hover responsive nowrap" style="width:100%">
-                                <thead >
+                              <form class="row g-3 mt-1">
+                              <table id="tabla_producto_venta" class="table table-hover" style="width:100%">
+                                <thead class="table-danger">
                                   <tr>
+                                    <th style="display: none;">Item</th>
+                                    <th></th>
+                                    <th>Producto</th>
+                                    <th>Categoria</th>
+                                    <th>Stock</th>
+                                    <th>Precio</th>
+                                    <th>Fecha Vencimiento</th>
+                                    <th>Receta Médica</th>                                    
+                                    <th>Operación</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <!-- DATOS ASINCRONOS -->
+                                </tbody>
+                              </table>
+                            </form>
+                          </div>
+
+                          <div class="card-body">
+
+                              <h5 class="card-title text-center" >Medicamentos de Marca</h5>
+
+                              <form class="row g-3 mt-1">
+                              <table id="tabla_producto_marca" class="table table-hover" style="width:100%">
+                                <thead class="table-danger">
+                                  <tr>
+                                    <th style="display: none;">Item</th>
                                     <th></th>
                                     <th>Producto</th>
                                     <th>Categoria</th>
@@ -132,20 +166,22 @@
                   
                   <div class="row">
                       <div class="col-lg-12">
-                      <div class="card text-center">
+                      <div class="card ">
                             <div class="card-body">
-                                <h5 class="card-title">Lista de Medicamento/productos agregados</h5>
+                                <h5 class="card-title text-center">Lista de Medicamento/productos agregados</h5>
 
                                 <form class="row g-3">
                                 <table id="tabla_producto" class="table table-striped table-hover responsive nowrap" style="width:100%">
-                                  <thead >
+                                  <thead class="table-danger">
                                     <tr>
+                                      <th style="display: none;">Item</th>
                                       <th></th>
                                       <th>Producto</th>
                                       <th>Usuario</th>
                                       <th>Cantidad</th>
                                       <th>Unidad/blister</th>
                                       <th>precioTotal</th>
+                                      <th>Operaciónes</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -159,8 +195,10 @@
                     </div>       
                  </section>
 
+                  <!-- Modal iniciar venta-->
+                 
 
-                 <!-- Modal-->
+                 <!-- Modal listar producto-->
                  <div id="modal-agregarP" class="modal fade" tabindex="-1" aria-hidden="true" style="overflow-y: scroll; display: none;">
                     <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
                         <div class="modal-content" style="border-radius: 10px; background-color: white;">
@@ -185,7 +223,7 @@
                                         </div>
                                         <div class="card-footer text-muted">
                                             <button type="button" class="btn btn-success" id="guardar">Agregar</button>
-                                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal"  id="cancelar">Cancelar</button>
                                         </div>
                                     </div>
 
@@ -196,6 +234,9 @@
                         </div>
                     </div>
                 </div>
+
+
+                
 
 
 

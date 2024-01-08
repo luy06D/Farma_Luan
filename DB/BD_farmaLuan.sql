@@ -11,6 +11,7 @@ apellidos	VARCHAR(30)	NOT NULL
 ENGINE=INNODB;
 
 INSERT INTO personas (nombres, apellidos) VALUES
+('Jesus','Camacho Carrasco'),
 ('Luis David','Cusi Gonzales');
 
 CREATE TABLE usuarios
@@ -27,30 +28,17 @@ CONSTRAINT fk_idp_usu FOREIGN KEY (idpersona) REFERENCES personas (idpersona)
 ENGINE=INNODB;
 
 INSERT INTO usuarios (idpersona, nomusuario, claveacceso, nivelacceso) VALUES
-	(1, 'Luy_06', '060903', 'admin');
+	(1, 'Jesu_04', '200418', 'adminJ'),
+	(2, 'Luy_06', '060903', 'adminL');
 
 
-CREATE TABLE categorias
-(
-idcategoria		INT AUTO_INCREMENT PRIMARY KEY,
-nombrecategoria		VARCHAR(40)	NOT NULL,
-numestanteria		TINYINT		NOT NULL
-)
-ENGINE = INNODB;
-
-INSERT INTO categorias (nombrecategoria, numestanteria) VALUES 
-('Analgésicos', 1),
-('Antibióticos', 2),
-('Antiinflamatorios', 3),
-('Antipiréticos', 4),
-('Antihistamínicos', 5);
 
 
 CREATE TABLE productos 
 (
 idproducto		INT AUTO_INCREMENT PRIMARY KEY,
-idcategoria		INT		NOT NULL,
-nombreproducto		VARCHAR(40) 	NOT NULL,
+nombreproducto		VARCHAR(50) 	NOT NULL,
+nombrecategoria		VARCHAR(50)     NOT NULL,
 descripcion		VARCHAR(150)	NULL,
 stock			SMALLINT	NOT NULL DEFAULT 0 ,
 precio			DECIMAL(5,2)	NOT NULL,
@@ -59,7 +47,6 @@ fechavencimiento	DATE		NULL,
 numlote			INT		NOT NULL,	
 recetamedica		VARCHAR(15)	NOT NULL, -- REQUIERE , NO REQUIERE
 estado 			VARCHAR(10)	NOT NULL DEFAULT 'Agotado',
-CONSTRAINT fk_idc_pro FOREIGN KEY (idcategoria) REFERENCES categorias(idcategoria),
 CONSTRAINT uk_nom_pro UNIQUE(nombreproducto),
 CONSTRAINT ck_pre_pro CHECK (precio > 0),
 CONSTRAINT ck_num_pro CHECK (numlote > 0)
@@ -67,10 +54,21 @@ CONSTRAINT ck_num_pro CHECK (numlote > 0)
 ENGINE = INNODB;
 
 
-INSERT INTO productos (idcategoria, nombreproducto, descripcion, stock, precio, fechaproduccion, fechavencimiento, numlote, recetamedica)VALUES 
-(1, 'Paracetamol', 'Analgesia para aliviar el dolor', 10, 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere'),
-(2, 'Amoxicilina', 'Antibiótico para tratar infecciones', 10,  12.99, '2022-02-01', '2025-02-01', 54321, 'Requiere'),
-(3, 'Ibuprofeno', 'Antiinflamatorio para reducir la inflamación',10,  7.50, '2022-03-01', '2026-03-01', 67890, 'No requiere');
+INSERT INTO productos ( nombreproducto, nombrecategoria, descripcion, stock, precio, fechaproduccion, fechavencimiento, numlote, recetamedica)VALUES 
+('Paracetamol', 'Paracetamol', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere'),
+('Amoxicilina', 'Amoxicilina', 'Antibiótico para tratar infecciones', 100,  12.99, '2022-02-01', '2025-02-01', 54321, 'Requiere'),
+('Ibuprofeno', 'Ibuprofeno', 'Antiinflamatorio para reducir la inflamación',100,  7.50, '2022-03-01', '2026-03-01', 67890, 'No requiere'),
+('GriPachek', 'GriPachek', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere'),
+
+('Cetamol', 'Paracetamol', 'Antibiótico para tratar infecciones', 100,  12.99, '2022-02-01', '2025-02-01', 54321, 'Requiere'),
+('Cilina', 'Amoxicilina', 'Antiinflamatorio para reducir la inflamación',10,  7.50, '2022-03-01', '2026-03-01', 67890, 'No requiere'),
+('Profeno', 'Ibuprofeno', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere'),
+('Pachek', 'GriPachek', 'Antibiótico para tratar infecciones', 100,  12.99, '2022-02-01', '2025-02-01', 54321, 'Requiere'),
+
+('Ceta', 'Paracetamol', 'Antiinflamatorio para reducir la inflamación',100,  7.50, '2022-03-01', '2026-03-01', 67890, 'No requiere'),
+('Moxilona', 'Amoxicilina', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 12345, 'No requiere'),
+('Uprofeno', 'Ibuprofeno', 'Antibiótico para tratar infecciones', 100,  12.99, '2022-02-01', '2025-02-01', 54321, 'Requiere'),
+('Ipachek', 'GriPachek',' Antiinflamatorio para reducir la inflamación',100,  7.50, '2022-03-01', '2026-03-01', 67890, 'No requiere');
 
 
 

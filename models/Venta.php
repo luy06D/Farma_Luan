@@ -19,6 +19,16 @@ class Ventas extends Conexion{
         }
     }
 
+    public function productos_listar_categoria($categoria) {
+        try {
+            $query = $this->connection->prepare("CALL spu_productos_categoria(?)");
+            $query->execute(array($categoria));
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        } catch (Exception $err) {
+            die($err->getMessage());
+        }
+    }
 
 
     public function lista_productos(){
@@ -53,6 +63,7 @@ class Ventas extends Conexion{
     
         return $respuesta;
     }
+
 
     
     

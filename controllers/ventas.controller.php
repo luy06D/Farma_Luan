@@ -15,16 +15,16 @@ if(isset($_GET['op'])){
         if ($data) {
             foreach ($data as $listar) {
                 $nombreProducto = $listar['nombreproducto'];
-                $idProducto = $listar['idproducto'];
     
                 // Obtener las dos primeras letras del nombre del producto
                 $dosPrimerasLetras = substr($nombreProducto, 0, 2);
     
                 echo "
                     <tr>
+                        <td><span class='id-lista'>{$listar['idproducto']}</span></td>
                         <td>
                             <img src='https://dummyimage.com/40x40/999999/ffffff&text=$dosPrimerasLetras' alt='Avatar' style='border-radius: 50%; width: 35px; height: 30px;'>
-                            <span class='id-lista'>$idProducto</span>
+                            
                         </td>
                         <td>{$listar['nombreproducto']}</td>
                         <td>{$listar['nombrecategoria']}</td>
@@ -33,6 +33,38 @@ if(isset($_GET['op'])){
                         <td>{$listar['fechavencimiento']}</td>
                         <td>{$listar['recetamedica']}</td>                                    
                         <td>                
+                            <a class='editar-product btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#modal-agregarP' data-idproducto ='{$listar['idproducto']}'><i class='bi bi-check-circle'></i></a>
+                        </td>
+                    </tr>";
+            }
+        }
+    }
+
+    if ($_GET['op'] == 'productos_listar_categoria') {
+        $categoria = isset($_GET['categoria']) ? $_GET['categoria'] : '';
+        
+        $data = $ventas->productos_listar_categoria($categoria);
+
+        if ($data) {
+            foreach ($data as $listar) {
+                $nombreProducto = $listar['nombreproducto'];
+
+                // Obtener las dos primeras letras del nombre del producto
+                $dosPrimerasLetras = substr($nombreProducto, 0, 2);
+
+                echo "
+                    <tr>
+                        <td><span class='id-lista'>{$listar['idproducto']}</span></td>
+                        <td>
+                            <img src='https://dummyimage.com/40x40/999999/ffffff&text=$dosPrimerasLetras' alt='Avatar' style='border-radius: 50%; width: 35px; height: 30px;'>
+                        </td>
+                        <td>{$listar['nombreproducto']}</td>
+                        <td>{$listar['nombrecategoria']}</td>
+                        <td>{$listar['stock']}</td>
+                        <td>S/.{$listar['precio']}</td>
+                        <td>{$listar['fechavencimiento']}</td>
+                        <td>{$listar['recetamedica']}</td>
+                        <td>
                             <a class='editar-product btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#modal-agregarP' data-idproducto ='{$listar['idproducto']}'><i class='bi bi-check-circle'></i></a>
                         </td>
                     </tr>";
@@ -56,9 +88,10 @@ if(isset($_GET['op'])){
 
                 echo "
                 <tr>
+                     <td><span class='id-lista'>{$listar['iddetalleventa']}</span></td>
                     <td>
                         <img src='https://dummyimage.com/40x40/999999/ffffff&text=$dosPrimerasLetras' alt='Avatar' style='border-radius: 50%;  width: 35px; height: 30px;''>
-                        <span class='id-lista'>{$listar['iddetalleventa']}</span>
+                        
                     </td>
                     <td>{$listar['nombre_producto']}</td>
                     <td>{$listar['nombre_usuario']}</td>
