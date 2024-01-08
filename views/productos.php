@@ -35,14 +35,15 @@
                 <li class="nav-item" role="presentation">
                   <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="true">Inventario</button>
                 </li>
-                <!-- <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">---</button>
-                </li>
                 
-                <li class="nav-item" role="presentation">
-                  <button class="nav-link" id="detallec-tab" data-bs-toggle="tab" data-bs-target="#bordered-detallec" type="button" role="tab" aria-controls="tipe" aria-selected="false">----</button>
+                 <!-- <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#bordered-profile" type="button" role="tab" aria-controls="profile" aria-selected="false">---</button>
                 </li> -->
                 
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="detallec-tab" data-bs-toggle="tab" data-bs-target="#bordered-detallec" type="button" role="tab" aria-controls="tipe" aria-selected="false">Detalle Compras</button>
+                </li> 
+              
               </ul>
               
               <div class="tab-content pt-2" id="borderedTabContent">
@@ -61,7 +62,7 @@
                               <button type="button" id="abrir-modal-registro" class="btn btn-primary btn-md mb-3 mt-3 shadow-lg" data-bs-toggle="modal" data-bs-target="#modal-newProduct">
                               Nuevo producto <i class="bi bi-plus-lg"></i>
                               </button>
-                              <button id="reporte-inventario" class="btn btn-danger" type="button">Generar reporte <i class="bi bi-file-earmark-pdf"></i></button>                                 
+                              <button id="reporte-inventario" class="btn btn-danger shadow-lg" type="button">Generar reporte <i class="bi bi-file-earmark-pdf"></i></button>                                 
                              
                                 <!-- <button type="button" id="abrir-modal-recuperar" class="btn btn-primary btn-md ml-2 mr-2" data-bs-toggle="modal" data-bs-target="#modal-RecuperarEquipo">
                                   <i class="bi bi-arrow-counterclockwise"></i>Recuperar
@@ -109,7 +110,7 @@
                         <div class="modal-body">
                           <form id="form-productos">
                             <div class="row">
-                              <div class="col-lg-4">
+                              <div class="col-lg-4 mt-2">
                                 <label for="ls-categoria" class="col-form-label">Categoria:</label>
                                 <div class="col-sm-12">
                                   <select class="form-select" id="ls-categoria">
@@ -125,9 +126,23 @@
                                 </div>
                               </div>
                               <div class="col-lg-4 mt-2">
+                                <label for="ls-unidades" class="col-form-label">Unidad de medida</label>
+                                <div class="col-sm-12">
+                                  <select class="form-select" id="ls-unidades">
+                                    <option selected>Seleccione</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-lg-4 mt-2">
                                 <label for="precio" class="col-form-label">Precio Unitario:</label>
                                 <div class="col-sm-12">
                                   <input type="number" class="form-control" id="precio" placeholder="Escriba aquí">
+                                </div>
+                              </div>
+                              <div class="col-lg-4 mt-2">
+                                <label for="stock" class="col-form-label">Cantidad Stock:</label>
+                                <div class="col-sm-12">
+                                  <input type="number" class="form-control" id="stock" placeholder="Escriba aquí">
                                 </div>
                               </div>
                               <div class="col-lg-4 mt-2">
@@ -162,7 +177,7 @@
                               </div>
 
                               <div class="col-lg-8 mt-2">
-                                <label for="descripcion" class="col-form-label">Descripción:</label>
+                                <label for="descripcion" class="col-form-label">Descripción (Opcional):</label>
                                 <div class="col-sm-12">
                                   <textarea type="text" class="form-control" placeholder="Ingrese una descripción (Opcional)" id="descripcion" rows="3"></textarea>
                                 </div>
@@ -254,7 +269,7 @@
                   
                   
                   <!-- Modal-Recuperar Equipo -->
-                  <div class="modal fade" id="modal-RecuperarEquipo" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+                  <!-- <div class="modal fade" id="modal-RecuperarEquipo" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
                       <div class="modal-content">
                         <div class="modal-header bg-primary" id="modal-registro-header">
@@ -262,8 +277,7 @@
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                          <!-- Multi Columns Form -->
-                          <!-- Horizontal Form -->
+           
                           <form id="form-equipoA">
                             <div class="input-group flex-nowrap mb-2">
                               <span class="input-group-text" id=""><i class="bi bi-search"></i></span>
@@ -272,23 +286,24 @@
 
                             <div class="list-group mt-4" id="resultadoBusqueda"></div>
                             
-                          </form><!-- End Horizontal Form -->
+                          </form>
                         </div>
                         
                       </div>
                     </div>
-                  </div>
+                  </div> -->
+                  
                 </div>
-
+<!-- 
                 <div class="tab-pane fade" id="bordered-profile" role="tabpanel" aria-labelledby="profile-tab">
                   <section class="section mt-3">
         
-                    <div class="row"> <!-- row justify-content-center align-items-center --> 
+                    <div class="row"> 
                       <div class="col-lg-12">
-                        <div class="card"> <!-- card mx-auto -->
+                        <div class="card"> 
                           <div class="card-body">
                             <h5 class="card-title">Registrar serie</h5>
-                            <!-- Multi Columns Form -->
+    
                             <form class="row g-3">
                               <table id="tabla-series" class="table table-hover" style="width:100%">
                                 <thead class="table-primary">
@@ -304,19 +319,19 @@
                                 <tbody>
                                 </tbody>
                               </table>
-                            </form><!-- End Multi Columns Form -->
+                            </form>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </div> -->
 
-                    
+<!--                     
                     <div class="row"> 
                       <div class="col-lg-12">
                         <div class="card"> 
                           <div class="card-body">
                             <h5 class="card-title">Búsqueda de serie</h5>
-                            <!-- Multi Columns Form -->
+
                             <form class="row g-3">
                               <div class="col-lg-2">
                                 <input type="search" id="buscarserie" class="form-control" placeholder="Ingrese el n° serie">
@@ -338,11 +353,11 @@
                       </div>
                     </div>
 
-                  </section>
+                  </section> -->
 
     
                   <!-- Modal agregar series -->
-                  <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+                  <!-- <div class="modal fade" id="modalId" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
                       <div class="modal-content">
                         <div class="modal-header bg-primary">
@@ -364,7 +379,7 @@
                       </div>
                     </div>
                   </div>               
-                </div>
+                </div> -->
 
                 <div class="tab-pane fade" id="bordered-detallec" role="tabpanel" aria-labelledby="detallec-tab">
                   <section class="section mt-3">
@@ -372,9 +387,20 @@
                       <div class="col-lg-12">
                         <div class="card"> <!-- card mx-auto -->
                           <div class="card-body">
-                            <h5 class="card-title">Búsqueda por rango de fechas</h5>
+                            <h5 class="card-title">Búsqueda por producto & fecha</h5>
                             <form id="form-comprasdetalles">
                               <div class="row g-3">
+                                
+                              <div class="col-lg-4 mt-2">
+                                <label for="ls-receta" class="col-form-label">Receta médica:</label>
+                                <div class="col-sm-12">
+                                  <select class="form-select" id="ls-receta">
+                                    <option selected>Seleccione</option>
+                                    <option value="No requiere">No requiere</option>
+                                    <option value="Requiere">Requiere</option>
+                                  </select>
+                                </div>
+                              </div>
                                 <div class="col-md-4 col-lg-3 mt-2">
                                   <div class="input-group  ">
                                     <span class="input-group-text" id="basic-addon1"><i class='bx bx-calendar' ></i></span>

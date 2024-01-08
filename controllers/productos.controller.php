@@ -9,8 +9,10 @@ if(isset($_POST['op'])){
     if($_POST['op'] == 'registrar_producto'){
         $data = [
             "idcategoria"       => $_POST['idcategoria'],
+            "idunidad"          => $_POST['idunidad'],
             "nombreproducto"    => $_POST['nombreproducto'],
             "descripcion"       => $_POST['descripcion'],
+            "stock"             => $_POST['stock'],
             "precio"            => $_POST['precio'],
             "fechaproduccion"   => $_POST['fechaproduccion'],
             "fechavencimiento"  => $_POST['fechavencimiento'],
@@ -44,6 +46,11 @@ if(isset($_POST['op'])){
     if($_POST['op'] == 'getCategorias'){
 
         echo json_encode($productos->get_categorias());
+    }
+
+    if($_POST['op'] == 'getUnidades'){
+
+        echo json_encode($productos->get_unidades());
     }
 
 }
