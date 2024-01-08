@@ -129,6 +129,6 @@ END $$
 
 CALL spu_compra_registrar(1, 1, 2, 2);
 
-SELECT * FROM compraProductos
-SELECT * FROM productos
+
+
 

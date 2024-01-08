@@ -21,6 +21,7 @@ public function productos_listar(){
     }
 }
 
+
 public function get_categorias(){
     try{
         $query = $this->connection->prepare("SELECT * FROM categorias");
