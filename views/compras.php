@@ -57,8 +57,8 @@
                                                   <label for="lsTipoComprobante" class="form-label">Tipo Comprobante:</label>
                                                   <select id="lsTipoComprobante" class="form-select">
                                                     <option>Seleccione</option>
-                                                    <option value="No requiere">TICKET</option>
-                                                    <option value="Requiere">NOSE</option>
+                                                    <option value=boleta">Boleta</option>
+                                                    <option value="factura">factura</option>
                                                     
                                                   </select>
                                                 </div> 
@@ -74,7 +74,7 @@
                                                 </div>
 
                                                 <div>
-                                                    <button type="button" id="btnAgregarCotiz" class="btn btn-danger shadow-lg mb-3 mt-3"  data-bs-toggle='modal' data-bs-target='#modal-productoB'>Buscar Productos  <i class="bi bi-search"></i></button>                                                                
+                                                    <button type="button" id="btnAgregarP" class="btn btn-success shadow-lg mb-3 mt-3"  data-bs-toggle='modal' data-bs-target='#modal-productoB'>Buscar Productos  <i class="bi bi-search"></i></button>                                                                
                                                 </div>
 
                                                 <section class="section mb-3 mt-4">
@@ -82,7 +82,7 @@
                                                           <!-- Default Table -->
                                                           <div class="col-lg-12">
                                                               <table class="table" id="table-equiposCotiz">
-                                                                      <thead>
+                                                                      <thead class="table-success">
                                                                         <tr>
                                                                         <th style="display: none;" scope="col">item</th>
                                                                           <th scope="col">Producto</th>
@@ -91,7 +91,7 @@
                                                                           <th scope="col">Quitar</th>
                                                                         </tr>
                                                                       </thead>
-                                                                      <tbody id="tbody-equipoCotiz">                                                                 
+                                                                      <tbody id="tbody-productoCompra">                                                                 
                                                             
                                                                       </tbody>
                                                               </table>       
@@ -133,27 +133,19 @@
                 <div class="modal-body">
                 <div class="input-group flex-nowrap mb-2">
                   <span class="input-group-text" id=""><i class="bi bi-search"></i></span>
-                  <input type="text" class="form-control" id="b-equipo" placeholder="Buscar aqui......." aria-label="Username" aria-describedby="addon-wrapping" autocomplete="off">
+                  <input type="text" class="form-control" id="b-producto" placeholder="Buscar aqui......." aria-label="Username" aria-describedby="addon-wrapping" autocomplete="off">
                 </div>
-                <div class="list-group mt-4" id="equipos_buscado">
+                <div class="list-group mt-4" id="producto_buscado">
 
                 </div>          
                 <div class="modal-footer">           
                     
-                    <button type="button" class="btn btn-secondary shadow-lg" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-danger shadow-lg" data-bs-dismiss="modal">Cerrar</button>
                 </div>
               </div>
         </div>
     </div>
 </section>
-
-
-
-
-
-    
- 
-
 
 
   </main><!--fin main -->
@@ -176,6 +168,7 @@
   <!-- Incluye Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="../js/alertSweet.js"></script>
+  <script src="../js/compras.js"></script>
 
 
 

@@ -92,8 +92,13 @@ CREATE TABLE compraProductos
 (
 idcompraproducto	INT AUTO_INCREMENT PRIMARY KEY,
 idusuario		INT	NOT NULL,
+tipocomprobante		VARCHAR(20) NULL,
+numlote			INT 	NOT NULL,
+numfactura		INT 	NOT NULL,
 fechacompra		DATE	NOT NULL DEFAULT NOW(),
-CONSTRAINT fk_idu_com FOREIGN KEY(idusuario) REFERENCES usuarios (idusuario)
+CONSTRAINT fk_idu_com FOREIGN KEY(idusuario) REFERENCES usuarios (idusuario),
+CONSTRAINT uk_numl_com UNIQUE(numlote),
+CONSTRAINT uk_numf_com UNIQUE(numfactura)
 )
 ENGINE = INNODB;
 

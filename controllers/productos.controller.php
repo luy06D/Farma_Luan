@@ -69,8 +69,7 @@ if(isset($_GET['op'])){
                 <td>{$list['unidadmedida']}</td>
                 <td>{$list['fechavencimiento']}</td>
                 <td>{$list['recetamedica']}</td>                                    
-                <td>                
-                <a class='compras btn btn-success btn-sm' data-idcontrato ='{$list['idproducto']}' ><i class='bi bi-cart-plus'></i></a>                  
+                <td>                                           
                 <a class='editar-product btn btn-warning btn-sm' data-bs-toggle='modal' data-bs-target='#modal-editarequipo' data-idproducto ='{$list['idproducto']}'><i class='bi bi-pencil-square'></i></a>
                </td>                                             
             </tr>
