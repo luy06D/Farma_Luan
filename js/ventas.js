@@ -25,7 +25,7 @@ $(document).ready(function () {
             url: '../controllers/ventas.controller.php',
             type: 'POST',
             data: { 'op': 'registrar_venta', 'nomusuario': nomusuario},
-            success: function (result) {
+            success: function () {
                 ventaIniciada = true;
 
                 // Desactivar o activar input y botones según el estado de la venta
@@ -62,7 +62,7 @@ $(document).ready(function () {
                 $("#tabla_producto_venta tbody").html(result);
 
                 dataTable.clear().rows.add($("#tabla_producto_venta tbody tr")).draw();
-                
+                calcularMontoTotal();
 
                 $(".editar-product").removeClass("active");
             }
@@ -175,7 +175,7 @@ $(document).ready(function () {
     function productos_registrar() {
         const idproducto = $("#idproducto").val().trim();
         const cantidad = $("#cantidad").val().trim();
-
+    
         if (idproducto === '' || cantidad === '' || parseInt(cantidad) <= 0) {
             stockInsuficiente();
         } else {
@@ -188,44 +188,48 @@ $(document).ready(function () {
                     if (response.status) {
                         var producto = response.data[0];
                         var stockDisponible = producto.stock;
-
+    
                         if (parseInt(stockDisponible) < parseInt(cantidad)) {
                             stockInsuficiente();
                         } else {
-                            const senData = {
-                                'op': 'registrar_producto_lista',
-                                'idproducto': $("#idproducto").val(),
-                                'cantidad': $("#cantidad").val(),
-                            };
-
-                            $.ajax({
-                                url: '../controllers/ventas.controller.php',
-                                type: 'POST',
-                                data: senData,
-                                success: function (response) {
-                                    $("#productos")[0].reset();
-                                    $("#modal-agregarP").modal('hide');
-                                    
-                                    $("#guardar").on("click", function () {
-                                        $("#buscar-producto").val("");
-                                    });
-
-
-                                    productos_listar_ventas("");
-                                    productos_listar_por_categoria(""); 
-                                    productos_listar();
-
-                                   
-
-                                    toastFinalizar("Agregado correctamente");
-                                }
-                            });
+                            // Verificar si el producto ya está en la lista
+                            var productoExistente = $("#tabla_producto tbody tr[data-idproducto='" + idproducto + "']");
+                            
+                            if (productoExistente.length > 0) {
+                                // Producto ya en la lista, actualizar la cantidad
+                                var cantidadExistente = parseInt(productoExistente.find("td:eq(4)").text());
+                                productoExistente.find("td:eq(4)").text(cantidadExistente + parseInt(cantidad));
+                            } else {
+                                // Producto no en la lista, agregar nueva fila
+                                const senData = {
+                                    'op': 'registrar_producto_lista',
+                                    'idproducto': $("#idproducto").val(),
+                                    'cantidad': $("#cantidad").val(),
+                                };
+    
+                                $.ajax({
+                                    url: '../controllers/ventas.controller.php',
+                                    type: 'POST',
+                                    data: senData,
+                                    success: function (response) {
+                                        $("#productos")[0].reset();
+                                        $("#modal-agregarP").modal('hide');
+    
+                                        productos_listar_ventas("");
+                                        productos_listar_por_categoria(""); 
+                                        productos_listar();
+    
+                                        toastFinalizar("Agregado correctamente");
+                                    }
+                                });
+                            }
                         }
                     }
                 },
             });
         }
     }
+    
 
     $("#cancelar").on("click", function () {
         $("#buscar-producto").val("");
@@ -292,6 +296,7 @@ $(document).ready(function () {
         pageLength: 3,
         lengthChange: false,
         searching: false,
+        paging: false,
         order: [[0, 'desc']],
         columnDefs:[
             {
@@ -302,9 +307,33 @@ $(document).ready(function () {
        
     });
 
-    $("#guardar").click(productos_registrar);
 
+    function calcularMontoTotal() {
+        var montoTotal = 0;
+    
+        $("#tabla_producto tbody tr").each(function () {
+            var precioTotal = parseFloat($(this).data("precio-total")) || 0;
+            montoTotal += precioTotal;
+        });
+    
+        console.log("Monto Total Calculado:", montoTotal);
+    
+        $("#monto_total").val(montoTotal.toFixed(2));
+    }
+    
+    $("#guardar").on("click", function () {
+        console.log("Antes de productos_registrar");
+        productos_registrar();
+        console.log("Después de productos_registrar");
+
+        setTimeout(function() {
+            calcularMontoTotal();
+        }, 100);
+    });
+    
     cargarUsuarios();
     productos_listar();
     productos_listar_ventas("");
+    
+    
 });
