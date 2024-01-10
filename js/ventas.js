@@ -1,6 +1,57 @@
 $(document).ready(function () {
 
-    
+    var ventaIniciada = false;
+
+    function cargarUsuarios() {
+        $.ajax({
+            url: '../controllers/ventas.controller.php',
+            type: 'GET',
+            data: { 'op': 'lista_usuario' },
+            success: function (result) {
+                $("#usuario").html(result);
+
+                if (ventaIniciada) {
+                    $("#buscar-producto, #clear-input, #guardar").prop("disabled", false);
+                } else {
+                    $("#buscar-producto, #clear-input, #guardar").prop("disabled", true);
+                }
+            }
+        });
+    }
+
+
+    function Registrar_venta(nomusuario) {
+        $.ajax({
+            url: '../controllers/ventas.controller.php',
+            type: 'POST',
+            data: { 'op': 'registrar_venta', 'nomusuario': nomusuario},
+            success: function (result) {
+                ventaIniciada = true;
+
+                // Desactivar o activar input y botones según el estado de la venta
+                $("#buscar-producto, #clear-input, #guardar").prop("disabled", false);
+            }
+        });
+    }
+
+
+    $("#iniciarV").on("click", function () {
+        // Obtener el valor seleccionado del select de usuarios
+        var nomusuario = $("#usuario option:selected").text();
+
+        // Verificar si se seleccionó un usuario
+        if (nomusuario !== 'Seleccione') {
+            $("#Iusuario").text(nomusuario);
+            Registrar_venta(nomusuario);
+            toastFinalizar("Venta Iniciada");
+            $("#IniciarVenta").modal("hide");
+        } else {
+            // Mostrar un mensaje de error o realizar alguna acción
+            console.log("Por favor, seleccione un usuario.");
+        }
+    });
+
+
 
     function productos_listar_ventas(filtro) {
         $.ajax({
@@ -253,6 +304,7 @@ $(document).ready(function () {
 
     $("#guardar").click(productos_registrar);
 
+    cargarUsuarios();
     productos_listar();
     productos_listar_ventas("");
 });

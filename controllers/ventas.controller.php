@@ -7,6 +7,24 @@ if(isset($_GET['op'])){
 
     $ventas = new Ventas();
 
+    
+    if ($_GET['op'] == 'lista_usuario') {
+        $data = $ventas->lista_usuario();
+    
+        if ($data) {
+            // Opción fija para el chaleco
+            echo "<option value='Seleccione' selected>Seleccione</option>";
+    
+            // Lista de usuarios
+            foreach ($data as $listar) {
+                echo "<option value='{$listar['idusuario']}'>{$listar['nomusuario']}</option>";
+            }
+        }
+    }
+    
+    
+
+
     if ($_GET['op'] == 'productos_listar_ventas') {
         $filtro = isset($_GET['filtro']) ? $_GET['filtro'] : '';
     
@@ -33,8 +51,8 @@ if(isset($_GET['op'])){
                         <td>{$listar['fechavencimiento']}</td>
                         <td>{$listar['recetamedica']}</td>                                    
                         <td>                
-                            <a class='editar-product btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#modal-agregarP' data-idproducto ='{$listar['idproducto']}'><i class='bi bi-check-circle'></i></a>
-                        </td>
+                            <a type='button' class='editar-product btn btn-outline-success btn-sm' data-bs-toggle='modal' data-bs-target='#modal-agregarP' data-idproducto ='{$listar['idproducto']}'><i class='bi bi-check-circle'></i></a>
+
                     </tr>";
             }
         }
@@ -65,7 +83,7 @@ if(isset($_GET['op'])){
                         <td>{$listar['fechavencimiento']}</td>
                         <td>{$listar['recetamedica']}</td>
                         <td>
-                            <a class='editar-product btn btn-success btn-sm' data-bs-toggle='modal' data-bs-target='#modal-agregarP' data-idproducto ='{$listar['idproducto']}'><i class='bi bi-check-circle'></i></a>
+                            <a type='button' class='editar-product btn btn-outline-success btn-sm' data-bs-toggle='modal' data-bs-target='#modal-agregarP' data-idproducto ='{$listar['idproducto']}'><i class='bi bi-check-circle'></i></a>
                         </td>
                     </tr>";
             }
@@ -99,7 +117,7 @@ if(isset($_GET['op'])){
                     <td>{$listar['unidadproducto']}</td>
                     <td>S/.{$listar['preciototal']}</td>
                     <td>
-                    <a class='eliminar-product btn btn-danger btn-sm eliminar-fila' data-iddetalleventa ='{$listar['iddetalleventa']}' ><i class='bi bi-trash'></i></a>
+                    <a class='eliminar-product btn btn-outline-danger btn-sm eliminar-fila' data-iddetalleventa ='{$listar['iddetalleventa']}' ><i class='bi bi-trash'></i></a>
                     </td>                                          
                 </tr>";
             }
@@ -111,6 +129,18 @@ if(isset($_GET['op'])){
 
 if(isset($_POST['op'])){
     $ventas = new Ventas();
+
+    if ($_POST['op'] == 'registrar_venta') {
+        $data = [
+            "nomusuario" => $_POST['nomusuario'],
+        ];
+    
+        $respuesta = $ventas->registrar_venta($data);
+    
+        echo json_encode($respuesta);
+        exit;
+    }
+    
 
     if($_POST['op'] == 'registrar_producto_lista'){
         $data = [

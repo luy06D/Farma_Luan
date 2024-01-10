@@ -40,9 +40,20 @@ function mostrarSweetAlert(title, icon, text, timer = 1500) {
 
     }
 
+    
+
     function stockInsuficiente(){
       Swal.fire({
         title: "Stock insuficiente",
+        icon: "warning",
+        confirmButtonColor: "#E43D2C",
+    });
+
+    }
+
+    function ventainicio(){
+      Swal.fire({
+        title: "Venta Iniciada",
         icon: "warning",
         confirmButtonColor: "#E43D2C",
     });
@@ -118,7 +129,7 @@ function mostrarSweetAlert(title, icon, text, timer = 1500) {
         toast: true,
         position: 'top-end',
         showConfirmButton: false,
-        timer: 1000,
+        timer: 3000,
         timerProgressBar: true,
         didOpen: (toast) => {
           toast.addEventListener('mouseenter', Swal.stopTimer)

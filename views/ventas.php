@@ -89,9 +89,14 @@
                 <li class="nav-item" role="presentation">
                   <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#bordered-home" type="button" role="tab" aria-controls="home" aria-selected="true">Buscar Medicamento/Producto</button>
                 </li>
+
+                <li class="nav-item" role="presentation">
+                  <button class="nav-link" id="home-tab" data-bs-toggle="tab" data-bs-target="#venta-pago" type="button" role="tab" aria-controls="home" aria-selected="true">Lista y Pago de la venta</button>
+                </li>
               </ul>
 
               <div class="tab-content pt-2" id="borderedTabContent">
+
                 <div class="tab-pane fade show active" id="bordered-home" role="tabpanel" aria-labelledby="home-tab">
                  <section class="section mt-3">
 
@@ -100,17 +105,24 @@
                     <div class="col-lg-12">
                       <div class="card ">
                           <div class="card-body">
-                            <button id="iniciar" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                              Launch demo modal
-                            </button>
+                          
+                                  <div class="card border-success mt-2" style="max-width: 18rem;">
+                                    <button type="button" class="btn btn-outline-success me-2" data-bs-toggle="modal" data-bs-target="#IniciarVenta">
+                                        Iniciar Venta
+                                    </button>
+                                    <div class="card-body text-success">
+                                      <h5 class="card-title">Venta iniciada por</h5>
+                                      <p class="card-title text-center " id="Iusuario">.....</p>
+                                    </div>
+                                  </div>
+
+                              
                               <h5 class="card-title text-center" >Realizar Venta</h5>
 
                               <div class="form-floating col-md-4 mx-auto position-relative">
-
                                         <input type="text" id="buscar-producto" class="form-control nota-practica text-center" placeholder="" min="0" max="20">
                                         <span id="clear-input" class="clear-icon">&#10006;</span>
-                                        <label for="floatingInput">Buscar</label>
-                                
+                                        <label for="floatingInput">Buscar</label>                     
                               </div>
 
                               <form class="row g-3 mt-1">
@@ -163,36 +175,7 @@
                       </div>
                     </div>
                   </div>  
-                  
-                  <div class="row">
-                      <div class="col-lg-12">
-                      <div class="card ">
-                            <div class="card-body">
-                                <h5 class="card-title text-center">Lista de Medicamento/productos agregados</h5>
 
-                                <form class="row g-3">
-                                <table id="tabla_producto" class="table table-striped table-hover responsive nowrap" style="width:100%">
-                                  <thead class="table-danger">
-                                    <tr>
-                                      <th style="display: none;">Item</th>
-                                      <th></th>
-                                      <th>Producto</th>
-                                      <th>Usuario</th>
-                                      <th>Cantidad</th>
-                                      <th>Unidad/blister</th>
-                                      <th>precioTotal</th>
-                                      <th>Operaciónes</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <!-- DATOS ASINCRONOS -->
-                                  </tbody>
-                                </table>
-                              </form>
-                            </div>
-                        </div>
-                      </div>
-                    </div>       
                  </section>
 
                   <!-- Modal iniciar venta-->
@@ -236,12 +219,82 @@
                 </div>
 
 
-                
+                <div id="IniciarVenta" class="modal fade" tabindex="-1" aria-hidden="true" style="overflow-y: scroll; display: none;">
+                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                        <div class="modal-content" style="border-radius: 10px; background-color: white;">
 
+                            <div class="modal-body">
+                                <form id="venta">                                                                 
 
+                                    <div class="card text-center" id="modal-header01" style="width: 250px; margin: 0 auto;">
 
+                                    <div class="card-header">
+                                      <h5 class="modal-title text-secondary" id="modal-titulo01">Seleccionar Usuario</h5>
+                                    </div>
 
+                                    <div class="row justify-content-center">
+                                      <div class="col-md-8">
+                                        <select id="usuario" class="form-select mt-5" aria-label="Default select example">
+                                          <option selected>Seleccione</option>
+                                        </select>
+                                        
+                                      </div>
+                                    </div>
+                                                
+                                    
+
+                                    <div class="card-footer text-muted mt-5">
+                                            <button type="button" class="btn btn-success" id="iniciarV">Iniciar</button>
+                                            <button type="reset" class="btn btn-danger" data-bs-dismiss="modal"  id="">Cancelar</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
+
+              </div>
+
+
+              <div class="tab-pane fade show" id="venta-pago" role="tabpanel" aria-labelledby="home-tab">
+                 <section class="section mt-3">
+
+                 <div class="row">
+                      <div class="col-lg-12">
+                      <div class="card ">
+                            <div class="card-body">
+                                <h5 class="card-title text-center">Lista de Medicamento/productos agregados</h5>
+
+                                <form class="row g-3">
+                                <table id="tabla_producto" class="table table-striped table-hover responsive nowrap" style="width:100%">
+                                  <thead class="table-danger">
+                                    <tr>
+                                      <th style="display: none;">Item</th>
+                                      <th></th>
+                                      <th>Producto</th>
+                                      <th>Usuario</th>
+                                      <th>Cantidad</th>
+                                      <th>Unidad/blister</th>
+                                      <th>precioTotal</th>
+                                      <th>Operaciónes</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <!-- DATOS ASINCRONOS -->
+                                  </tbody>
+                                </table>
+                              </form>
+                            </div>
+                        </div>
+                      </div>
+                    </div> 
+                    
+                 </section>
+                </div>
+
           </div>
         </div>
        </div>

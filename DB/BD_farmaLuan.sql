@@ -12,7 +12,9 @@ ENGINE=INNODB;
 
 INSERT INTO personas (nombres, apellidos) VALUES
 ('Jesus','Camacho Carrasco'),
-('Luis David','Cusi Gonzales');
+('Luis David','Cusi Gonzales'),
+('Alejandro','Gallardo Yañez');
+
 
 CREATE TABLE usuarios
 (
@@ -29,7 +31,9 @@ ENGINE=INNODB;
 
 INSERT INTO usuarios (idpersona, nomusuario, claveacceso, nivelacceso) VALUES
 	(1, 'Jesu_04', '200418', 'admin'),
-	(2, 'Luy_06', '060903', 'admin');
+	(2, 'Luy_06', '060903', 'admin'),
+	(3, 'Alej_08', '200418', 'admin');
+	
 
 
 CREATE TABLE unidades

@@ -1,6 +1,40 @@
 USE farma_luan;
 
+
+
 -- PROCEDIMIENTOS VENTAS
+DELIMITER $$
+CREATE PROCEDURE listarUsuario()
+BEGIN
+    SELECT nomusuario FROM usuarios
+    ORDER BY idusuario;
+END $$
+
+
+
+
+DELIMITER $$
+CREATE PROCEDURE RegistrarVenta(
+    IN nombreUsuario VARCHAR(20)
+)
+BEGIN
+    DECLARE usuarioID INT;
+
+    -- Obtener el ID del usuario usando el nombre de usuario
+    SELECT idusuario INTO usuarioID FROM usuarios WHERE nomusuario = nombreUsuario;
+
+    -- Verificar si se encontró el usuario
+    IF usuarioID IS NOT NULL THEN
+        -- Insertar la venta utilizando el ID del usuario
+        INSERT INTO ventas (idusuario, fechaventa) VALUES (usuarioID, NOW());
+    END IF;
+END $$
+
+
+CALL RegistrarVenta('Jesu_04');
+
+
+SELECT * FROM ventas;
 
 DELIMITER $$
 CREATE PROCEDURE spu_productos_listar_ventas(IN nombreP VARCHAR(40))
@@ -201,6 +235,7 @@ BEGIN
         SET MESSAGE_TEXT = 'El monto ingresado no es suficiente para cubrir la venta.';
     END IF;
 END $$
+
 
 
 CALL RealizarPago('Efectivo', 20.00);

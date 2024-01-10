@@ -8,6 +8,38 @@ class Ventas extends Conexion{
         $this->connection = parent::getConnect();
     }
 
+    
+    public function lista_usuario(){
+        try{ $query = $this->connection->prepare("CALL listarUsuario()");
+            $query->execute();
+            $data = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+    
+        }catch(Exception $err){
+            die($err->getMessage());
+        }
+    } 
+
+
+    public function  registrar_venta($datos = []){
+        $respuesta = [
+            "status" => false,
+            "message" => ""
+        ];
+        try{
+            $consulta = $this->connection->prepare("CALL RegistrarVenta(?)");
+            $respuesta["status"] = $consulta->execute(array(
+                
+                $datos["nomusuario"],
+            ));
+        }
+        catch(Exception $e){
+            $respuesta["message"] = "No se pudo completar la operacion Codigo error: " .$e->getCode();
+        }
+        return $respuesta;
+    }
+
+
     public function productos_listar_ventas($filtro){
         try{ $query = $this->connection->prepare("CALL spu_productos_listar_ventas(?)");
             $query->execute(array($filtro));

@@ -127,7 +127,7 @@ BEGIN
 
 END $$
 
-CALL spu_compra_registrar(1, 1, 2, 2);
+CALL spu_compra_registrar(1, 3, 2, 2);
 
 
 SELECT * FROM unidades
