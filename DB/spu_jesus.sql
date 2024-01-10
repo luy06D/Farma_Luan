@@ -238,7 +238,7 @@ END $$
 
 
 
-CALL RealizarPago('Efectivo', 20.00);
+CALL RealizarPago('Efectivo', 1000.00);
 
 -- PROCEDIMINETO spu_productos_listar_ventas
 CALL  spu_productos_listar_ventas('p');

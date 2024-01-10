@@ -292,6 +292,55 @@
                       </div>
                     </div> 
                     
+                    <div class="row">
+                      <div class="col-lg-16">
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title text-center">Pago de la venta</h5>
+
+                            <div class="row">
+                              <div class="col-md-3">
+                                <span class="text">Tipo de pago</span>
+                                <select class="form-select mt-2" aria-label="Default select example">
+                                  <option selected>Seleccionar</option>
+                                  <option value="Efectivo">Efectivo</option>
+                                  <option value="Yape">Yape</option>
+                                  <option value="Plin">Plin</option>
+                                </select>
+                              </div>
+
+                              <div class="col-md-4">
+                                <span class="text">Monto total</span>
+                                <div class="input-group mt-2">
+                                  <span class="input-group-text">s/</span>
+                                  <input type="number" class="form-control" id="monto_total" disabled>
+                                </div>
+                              </div>
+
+                              <div class="col-md-3">
+                                <span class="text">Pago</span>
+                                <div class="input-group mt-2">
+                                  <span class="input-group-text">s/</span>
+                                  <input type="number" class="form-control" id="pago" >
+                                </div>
+                              </div>
+
+                              <div class="col-md-2">
+                                <span class="text">Vuelto</span>
+                                <div class="input-group mt-2">
+                                  <span class="input-group-text" >s/</span>
+                                  <input type="number" class="form-control" id="vuelto"  disabled>
+                                </div>
+                              </div>               
+
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    
                  </section>
                 </div>
 

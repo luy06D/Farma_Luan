@@ -105,7 +105,7 @@ if(isset($_GET['op'])){
                 $dosPrimerasLetras = substr($nombreProducto, 0, 2);
 
                 echo "
-                <tr>
+                <tr data-precio-total='{$listar['preciototal']}'>
                      <td><span class='id-lista'>{$listar['iddetalleventa']}</span></td>
                     <td>
                         <img src='https://dummyimage.com/40x40/999999/ffffff&text=$dosPrimerasLetras' alt='Avatar' style='border-radius: 50%;  width: 35px; height: 30px;''>
