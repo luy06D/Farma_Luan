@@ -98,7 +98,8 @@ CALL spu_getProductos(13);
 DELIMITER $$
 CREATE PROCEDURE spu_producto_buscar(IN _buscar VARCHAR(100))
 BEGIN 
-	SELECT 	PRO.idproducto, PRO.stock, PRO.nombreproducto, PRO.nombrecategoria, UN.idunidad,
+	SELECT 	PRO.idproducto, PRO.stock, PRO.nombreproducto, PRO.descripcion,
+		PRO.nombrecategoria,UN.idunidad,
 		PRO.stock,PRO.estado, PRO.precio, PRO.fechaproduccion,
 		PRO.recetamedica
 	FROM productos PRO
@@ -112,28 +113,36 @@ CALL spu_producto_buscar('para');
 DELIMITER $$
 CREATE PROCEDURE spu_compra_registrar
 (
--- params compra
+
 IN _idusuario INT,
 IN _tipocomprobante VARCHAR(20),
 IN _numlote	INT,
-IN _numfactura INT,
--- params detalle
-IN _idproducto INT,
-IN _cantidad SMALLINT,
-IN _preciocompra DECIMAL(7,2)
+IN _numfactura INT
 )
 BEGIN 
-	DECLARE idcompra_g INT;
 	
 	INSERT INTO compraProductos (idusuario, tipocomprobante, numlote, numfactura) VALUES
 		(_idusuario, _tipocomprobante, _numlote, _numfactura);
 		
-	SELECT LAST_INSERT_ID() INTO idcompra_g;
-	
+	SELECT LAST_INSERT_ID() AS idcompraproducto;
+
+END $$
+
+-- REGISTRAR DETALLE DE COMPRAS
+DELIMITER $$
+CREATE PROCEDURE spu_detalleC_registrar
+(
+IN _idproducto INT,
+IN _idcompraproducto INT,
+IN _cantidad SMALLINT,
+IN _preciocompra DECIMAL(7,2)
+)
+BEGIN
+
 	INSERT INTO detalleCompras (idproducto, idcompraproducto, cantidad, preciocompra) VALUES
-			(_idproducto, idcompra_g, _cantidad, _preciocompra);
+			(_idproducto, _idcompraproducto, _cantidad, _preciocompra);
 			
-	UPDATE productos SET stock = stock - _cantidad
+	UPDATE productos SET stock = stock + _cantidad
 	WHERE idproducto = _idproducto;
 	
 	UPDATE productos SET estado = 
@@ -143,10 +152,9 @@ BEGIN
 		END
 	WHERE idproducto = _idproducto;
 
-END $$
+END $$ 
 
-CALL spu_compra_registrar(1, 1, 2, 2);
-
-
-SELECT * FROM unidades
+SELECT * FROM compraProductos
+SELECT * FROM detalleCompras
+SELECT * FROM usuarios
 

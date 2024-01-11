@@ -14,19 +14,47 @@ class Compras extends Conexion{
 public function compras_registrar ($datos = []){
     $respuesta = [
         "status" => false,
-        "message" => ""
+        "message" => "",
+        "idcompraproducto" => null
     ];
+    
     try{
-        $consulta = $this->connection->prepare("CALL spu_compra_registrar(?,?,?,?,?,?,?)");
+        $consulta = $this->connection->prepare("CALL spu_compra_registrar(?,?,?,?)");
         $respuesta["status"] = $consulta->execute(array(
             
             $datos["idusuario"],
             $datos["tipocomprobante"],
             $datos["numlote"],
-            $datos["numfactura"],
+            $datos["numfactura"],           
+        ));
+
+        //Obtenemos el idcompraproducto que se genera
+        $resultado = $consulta->fetch(PDO::FETCH_ASSOC);
+        if($resultado){
+            $respuesta["idcompraproducto"] = $resultado["idcompraproducto"];
+        }
+    }
+    catch(Exception $e){
+        $respuesta["message"] = "No se pudo completar la operacion Codigo error: " .$e->getCode();
+    }
+    return $respuesta;
+
+}
+
+    
+public function detalleC_registrar ($datos = []){
+    $respuesta = [
+        "status" => false,
+        "message" => ""
+    ];
+    try{
+        $consulta = $this->connection->prepare("CALL spu_detalleC_registrar(?,?,?,?)");
+        $respuesta["status"] = $consulta->execute(array(
+            
             $datos["idproducto"],
-            $datos["cantidad"],            
-            $datos["preciocompra"],            
+            $datos["idcompraproducto"],
+            $datos["cantidad"],
+            $datos["preciocompra"],           
         ));
     }
     catch(Exception $e){

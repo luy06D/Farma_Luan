@@ -50,14 +50,14 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Registro de compras</h5>
                                             <!-- Formulario para realizar la cotización -->
-                                            <form class="row g-4" id="form-cotizacion">
+                                            <form class="row g-4" id="form-compra">
                                                 <!-- Contenido del formulario -->                                              
 
                                                 <div class="col-md-4">
                                                   <label for="lsTipoComprobante" class="form-label">Tipo Comprobante:</label>
                                                   <select id="lsTipoComprobante" class="form-select">
                                                     <option>Seleccione</option>
-                                                    <option value=boleta">Boleta</option>
+                                                    <option value="boleta">Boleta</option>
                                                     <option value="factura">factura</option>
                                                     
                                                   </select>
@@ -73,6 +73,11 @@
                                                   <input type="number" class="form-control" id="numlote" placeholder="Escriba aqui" >
                                                 </div>
 
+                                                <div class="col-md-4  mb-4">
+                                                  <label for="idusuario" class="form-label">usuario:</label>
+                                                  <input type="number" class="form-control" id="idusuario" placeholder="Escriba aqui" >
+                                                </div>
+
                                                 <div>
                                                     <button type="button" id="btnAgregarP" class="btn btn-success shadow-lg mb-3 mt-3"  data-bs-toggle='modal' data-bs-target='#modal-productoB'>Buscar Productos  <i class="bi bi-search"></i></button>                                                                
                                                 </div>
@@ -81,7 +86,7 @@
                                                         <div class="row">                                                  
                                                           <!-- Default Table -->
                                                           <div class="col-lg-12">
-                                                              <table class="table" id="table-equiposCotiz">
+                                                              <table class="table" id="table-compras">
                                                                       <thead class="table-success">
                                                                         <tr>
                                                                         <th style="display: none;" scope="col">item</th>
@@ -99,7 +104,11 @@
                                                           </div>                                                                                           
                                                         </div>
                                                  
-                                                      </section>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+                                                </section>  
+                                                <div>
+                                                    <button type="button" id="btn-registrarC" class="btn btn-success shadow-lg mb-3 mt-3" >Registrar compra</button>                                                                
+                                                    <button type="button" id="prueba" class="btn btn-success shadow-lg mb-3 mt-3" >prueba</button>                                                                
+                                                </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
                                             </form>
                                         </div>
                                     </div>

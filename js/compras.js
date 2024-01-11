@@ -1,11 +1,6 @@
 $(document).ready(function(){
 
     let searchTimer;
-    
-    // REGISTRAR COMPRAS PRODUCTOS
-    function compras_productos(){
-        
-    }
 
     // BUSCAR PRODUCTOS
     function buscar_producto(){      
@@ -31,7 +26,7 @@ $(document).ready(function(){
         'buscar': $("#b-producto").val()
         },
         success: function(result){  
-            console.log(result)                     
+                             
         $("#producto_buscado").empty();
   
         if(result.length > 0){
@@ -108,7 +103,105 @@ $(document).ready(function(){
     }
 
 
+    function compra_registrar(){
+        const tipocomprobante = $("#lsTipoComprobante").val().trim();
+        const numfactura      = $("#numfactura").val().trim();
+        const numlote         = $("#numlote").val().trim();
 
+        let sendData = {
+            'op'                : 'registrar_compra',
+            'idusuario'         : $("#idusuario").val(),
+            'tipocomprobante'   : $("#lsTipoComprobante").val(),
+            'numlote'           : $("#numlote").val(),
+            'numfactura'        : $("#numfactura").val(),            
+        }
+
+        mostrarPregunta('Compras', '¿Está seguro de realizar la operación?')
+        .then((result) => {
+            if(result.isConfirmed){
+                if(tipocomprobante === '' || numfactura === '' || numlote === ''){
+                    completeCampos();
+                }else{
+                    toastFinalizar("Operación exitosa");
+                    $.ajax({
+                        url: '../controllers/compras.controller.php',
+                        type: 'POST',
+                        data: sendData,
+                        success: function(result){
+                            console.log(result);                            
+                            var response = JSON.parse(result);
+                            if(response.status){
+                                var idcompraproducto = response.idcompraproducto;
+                                console.log(idcompraproducto);
+                                detalle_productos(idcompraproducto);
+                            }
+
+                        }
+                    })
+                }
+            }
+        })
+        $.ajax()
+
+    }
+
+    
+
+
+    // REGISTRAR COMPRAS PRODUCTOS
+    function detalle_productos(id){
+
+        const tableProducto = document.querySelector("#table-compras");
+        const rows = tableProducto.getElementsByTagName("tr");
+        const dataProductos = [];
+        
+        for(let i = 1; i < rows.length; i++){
+            const fila = rows[i];
+            const cells = fila.getElementsByTagName("td");
+            if(cells.length === 5){
+
+                const idproducto = parseInt(cells[0].textContent);
+                const cantidad = parseInt(cells[2].querySelector("input").value);
+                const precioCompra = parseFloat(cells[3].querySelector("input").value);
+
+                dataProductos.push({
+                    idproducto: idproducto,
+                    cantidad: cantidad,
+                    precioCompra: precioCompra
+                });
+
+                
+            }
+        }
+
+        console.log(dataProductos);
+        dataProductos.forEach((pro) =>{
+            let sendData = {
+                'op' : 'registrar_detalleC',
+                'idproducto' : pro.idproducto,
+                'idcompraproducto' : id,
+                'cantidad' : pro.cantidad,
+                'preciocompra' : pro.precioCompra,
+            };
+
+            $.ajax({
+                url: '../controllers/compras.controller.php',
+                type: 'POST',
+                data: sendData,
+                success: function (result){
+                    console.log(result)
+                    $("#form-compra")[0].reset();
+                }
+            })
+        })
+
+
+        
+    }
+
+
+    $("#btn-registrarC").click(compra_registrar);
+    $("#prueba").click(detalle_productos);
     $("#b-producto").keyup(buscar_producto);
 
       //Evento click al boton para quitar en compras
