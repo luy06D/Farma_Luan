@@ -258,7 +258,7 @@ h6 {
 /* Alerts */
 .alert-heading {
   font-weight: 500;
-  font-family: "Poppins", sans-serif;
+  font-family: 'Mooli', sans-serif;
   font-size: 20px;
 }
 
@@ -307,7 +307,7 @@ h6 {
 /* Breadcrumbs */
 .breadcrumb {
   font-size: 14px;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Mooli', sans-serif;
   color: #899bbd;
   font-weight: 600;
 }
@@ -374,7 +374,7 @@ h6 {
   font-size: 26px;
   font-weight: 700;
   color: #012970;
-  font-family: "Nunito", sans-serif;
+  font-family: 'Mooli', sans-serif;
 }
 
 .header {

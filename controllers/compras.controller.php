@@ -12,15 +12,33 @@ if(isset($_POST['op'])){
             "tipocomprobante" => $_POST['tipocomprobante'],
             "numlote"       => $_POST['numlote'],
             "numfactura"    => $_POST['numfactura'],
-            "idproducto"    => $_POST['idproducto'],
-            "cantidad"      => $_POST['cantidad'],
-            "preciocompra"  => $_POST['preciocompra'],
 
         ];
+
+        $respuesta = $compras->compras_registrar($data);
+
+        if($respuesta["status"]){
+            $respuesta["idcompraproducto"] = $respuesta["idcompraproducto"]; 
+        }
+        
+        echo json_encode($respuesta);
     }
 
-    $respuesta = $compras->compras_registrar($data);
-    echo json_encode($respuesta);
+    if($_POST['op'] == 'registrar_detalleC'){
+
+        $data = [
+            "idproducto"        => $_POST['idproducto'],
+            "idcompraproducto"  => $_POST['idcompraproducto'],
+            "cantidad"          => $_POST['cantidad'],
+            "preciocompra"      => $_POST['preciocompra'],
+
+        ];
+
+        $respuesta = $compras->detalleC_registrar($data);
+        echo json_encode($respuesta);
+    }
+
+ 
 
 }
 
