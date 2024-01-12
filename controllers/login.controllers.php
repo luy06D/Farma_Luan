@@ -8,7 +8,6 @@ $_SESSION["status"] = [];
 
 
     if(isset($_GET['operacion'])){
-
         $usuario = new Usuario();
 
         if($_GET['operacion'] == 'destroy'){
@@ -17,8 +16,14 @@ $_SESSION["status"] = [];
             header('Location:../index.php');
         }
 
+    }
+
+    if(isset($_POST['operacion'])){
+
+        $usuario = new Usuario();
+
     
-        if($_GET['operacion'] == 'login'){
+        if($_POST['operacion'] == 'login'){
             $acceso = [
                 "status" => false,
                 "nivelacceso" => "",

@@ -1,11 +1,11 @@
 <?php
-require_once "conexion.php";
+require_once "Conexion.php";
 
 class Usuario extends Conexion{
     private $conexion;
 
     public function __CONSTRUCT(){
-        $this->conexion = parent::getConexion();
+        $this->conexion = parent::getConnect();
     }
 
     public function login($nomUsuario = '') {
