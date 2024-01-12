@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+    if (isset($_SESSION['segurity']) && $_SESSION['segurity']['status']){
+        header('Location: /index.php');
+    }
+
+
+// $idusuario = $_SESSION['segurity']['idusuario'];
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -59,7 +71,7 @@
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <!-- <h6><?= $_SESSION['segurity']['nombres']?> </h6> -->
+
               <span>Usuario</span>
             </li>
             <li>
@@ -67,7 +79,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="../controllers/usuarios.controller.php?operation=destroy">
+              <a class="dropdown-item d-flex align-items-center" href="../controllers/login.controllers.php?operacion=destroy">
                 <i class="bi bi-box-arrow-right"></i>
                 <span >Cerrar sesión</span>
               </a>
@@ -137,7 +149,7 @@
         </li><!-- End Profile Page Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="../controllers/usuarios.controller.php?operation=destroy">
+        <a class="nav-link collapsed" href="../controllers/login.controllers.php?operacion=destroy">
           <i class="bi bi-box-arrow-left"></i>
           <span>Salir</span>
         </a>

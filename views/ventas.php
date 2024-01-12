@@ -11,7 +11,7 @@
 
   <main id="main" class="main">
 
-<h1>Alejandro</h1>
+<marquee><h1>Farmacus Leidy</h1>
 
   </main><!--fin main -->
 
