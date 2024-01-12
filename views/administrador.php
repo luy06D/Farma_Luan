@@ -1,4 +1,11 @@
-<?php require_once './cabezera.php' ?>
+<?php require_once './cabezera.php'?>
+<?php
+
+
+    if (isset($_SESSION['segurity']) && $_SESSION['segurity']['status']){
+        header('Location: /index.php');
+    }
+?>
 
 
 <!-- DataTable -->

@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 
     let dataNew = true;
@@ -218,4 +219,5 @@ $(document).ready(function(){
 
     productos_listar();
     get_unidades();
+            
 })
