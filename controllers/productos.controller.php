@@ -13,7 +13,9 @@ if(isset($_POST['op'])){
             "nombrecategoria"    => $_POST['nombrecategoria'],
             "descripcion"       => $_POST['descripcion'],
             "stock"             => $_POST['stock'],
-            "precio"            => $_POST['precio'],
+            "precio_unidad"     => $_POST['precio_unidad'],
+            "precio_blister"    => $_POST['precio_blister'],
+            "precio_caja"       => $_POST['precio_caja'],
             "fechaproduccion"   => $_POST['fechaproduccion'],
             "fechavencimiento"  => $_POST['fechavencimiento'],            
             "recetamedica"      => $_POST['recetamedica'],
@@ -27,11 +29,13 @@ if(isset($_POST['op'])){
     if($_POST['op'] == 'actualizar_producto'){
         $data = [
             "idproducto"        => $_POST['idproducto'],     
-            "idunidad"           => $_POST['idunidad'],                    
+            "idunidad"          => $_POST['idunidad'],                    
             "nombreproducto"    => $_POST['nombreproducto'],
             "nombrecategoria"   => $_POST['nombrecategoria'],
             "descripcion"       => $_POST['descripcion'],
-            "precio"            => $_POST['precio'],
+            "precio_unidad"     => $_POST['precio_unidad'],
+            "precio_blister"    => $_POST['precio_blister'],
+            "precio_caja"       => $_POST['precio_caja'],
             "fechaproduccion"   => $_POST['fechaproduccion'],
             "fechavencimiento"  => $_POST['fechavencimiento'],            
             "recetamedica"      => $_POST['recetamedica'],
@@ -64,7 +68,9 @@ if(isset($_GET['op'])){
                 <td>{$list['nombreproducto']}</td>
                 <td>{$list['nombrecategoria']}</td>
                 <td>{$list['stock']}</td>
-                <td>S/.{$list['precio']}</td>
+                <td>S/.{$list['precio_unidad']}</td>
+                <td>S/.{$list['precio_blister']}</td>
+                <td>S/.{$list['precio_caja']}</td>
                 <td>{$list['estado']}</td>
                 <td>{$list['unidadmedida']}</td>
                 <td>{$list['fechavencimiento']}</td>

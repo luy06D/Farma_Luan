@@ -42,7 +42,7 @@ public function productos_registrar ($datos = []){
         "message" => ""
     ];
     try{
-        $consulta = $this->connection->prepare("CALL spu_productos_registrar(?,?,?,?,?,?,?,?,?)");
+        $consulta = $this->connection->prepare("CALL spu_productos_registrar(?,?,?,?,?,?,?,?,?,?,?)");
         $respuesta["status"] = $consulta->execute(array(
             
             $datos["idunidad"],
@@ -50,7 +50,9 @@ public function productos_registrar ($datos = []){
             $datos["nombrecategoria"],
             $datos["descripcion"],
             $datos["stock"],
-            $datos["precio"],            
+            $datos["precio_unidad"],            
+            $datos["precio_blister"],            
+            $datos["precio_caja"],            
             $datos["fechaproduccion"],
             $datos["fechavencimiento"],        
             $datos["recetamedica"]
@@ -68,7 +70,7 @@ public function productos_actualizar ($datos = []){
         "message" => ""
     ];
     try{
-        $consulta = $this->connection->prepare("CALL spu_productos_update(?,?,?,?,?,?,?,?,?)");
+        $consulta = $this->connection->prepare("CALL spu_productos_update(?,?,?,?,?,?,?,?,?,?,?)");
         $respuesta["status"] = $consulta->execute(array(
             
             $datos["idproducto"],
@@ -76,7 +78,9 @@ public function productos_actualizar ($datos = []){
             $datos["nombreproducto"],
             $datos["nombrecategoria"],
             $datos["descripcion"],            
-            $datos["precio"],            
+            $datos["precio_unidad"],            
+            $datos["precio_blister"],            
+            $datos["precio_caja"],          
             $datos["fechaproduccion"],
             $datos["fechavencimiento"],        
             $datos["recetamedica"]

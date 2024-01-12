@@ -92,7 +92,7 @@
                                                                         <th style="display: none;" scope="col">item</th>
                                                                           <th scope="col">Producto</th>
                                                                           <th scope="col">Cantidad de ingreso</th>                                                                                                                       
-                                                                          <th scope="col">Precio de compra/Unidad</th>                                                                          
+                                                                          <th scope="col">Precio de compra/Unidad</th>                                                                                                                                                 
                                                                           <th scope="col">Quitar</th>
                                                                         </tr>
                                                                       </thead>
@@ -106,8 +106,7 @@
                                                  
                                                 </section>  
                                                 <div>
-                                                    <button type="button" id="btn-registrarC" class="btn btn-success shadow-lg mb-3 mt-3" >Registrar compra</button>                                                                
-                                                    <button type="button" id="prueba" class="btn btn-success shadow-lg mb-3 mt-3" >prueba</button>                                                                
+                                                    <button type="button" id="btn-registrarC" class="btn btn-success shadow-lg mb-3 mt-3" >Registrar compra</button>                                                                                                                    
                                                 </div>                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
                                             </form>
                                         </div>

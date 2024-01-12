@@ -35,7 +35,7 @@
             <td><?=$registro['nombreproducto']?></td> 
             <td><?=$registro['nombrecategoria']?></td>
             <td><?=$registro['stock']?></td>
-            <td><?=$registro['precio']?></td>
+            <td><?=$registro['precio_unidad']?></td>
             <td><?=$registro['fechaproduccion']?></td>
             <td><?=$registro['fechavencimiento']?></td>
             <td><?=$registro['recetamedica']?></td>        
