@@ -63,7 +63,14 @@ nombreproducto		VARCHAR(50) 	NOT NULL,
 nombrecategoria		VARCHAR(50)     NOT NULL,
 descripcion		VARCHAR(150)	NULL,
 stock			SMALLINT	NOT NULL DEFAULT 0 ,
-precio			DECIMAL(5,2)	NOT NULL,
+precioUnitario		DECIMAL(5,2)	NOT NULL,
+precioBlister		DECIMAL(5,2)	NULL,
+nblister		SMALLINT	NULL,	
+precioCaja		DECIMAL(5,2)	NULL,
+ncaja			SMALLINT	NULL,	
+precio_unidad		DECIMAL(5,2)	NOT NULL,
+precio_blister		DECIMAL(5,2)	NULL,
+precio_caja		DECIMAL(5,2)	NULL,
 fechaproduccion		DATE		NULL,
 fechavencimiento	DATE		NULL,	
 recetamedica		VARCHAR(15)	NOT NULL, -- REQUIERE , NO REQUIERE
@@ -73,27 +80,27 @@ update_at		DATETIME	NULL,
 inactive_at		DATETIME 	NULL,
 CONSTRAINT fk_idu_pro FOREIGN KEY (idunidad) REFERENCES unidades(idunidad),
 CONSTRAINT uk_nom_pro UNIQUE(nombreproducto),
-CONSTRAINT ck_pre_pro CHECK (precio > 0)
+CONSTRAINT ck_preU_pro CHECK (precioUnitario > 0),
+CONSTRAINT ck_preB_pro CHECK (precioBlister > 0),
+CONSTRAINT ck_preC_pro CHECK (precioCaja > 0)
 )
 ENGINE = INNODB;
 
-INSERT INTO productos (idunidad, nombreproducto, nombrecategoria, descripcion, stock, precio, fechaproduccion, fechavencimiento, recetamedica)VALUES 
-(1, 'Paracetamol', 'Paracetamol', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 'No requiere'),
-(2, 'Amoxicilina', 'Amoxicilina', 'Antibiótico para tratar infecciones', 100, 12.99, '2022-02-01', '2025-02-01', 'Requiere'),
-(3, 'Ibuprofeno', 'Ibuprofeno', 'Antiinflamatorio para reducir la inflamación', 100, 7.50, '2022-03-01', '2026-03-01', 'No requiere'),
-(4, 'GriPachek', 'GriPachek', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 'No requiere'),
+INSERT INTO productos (idunidad, nombreproducto, nombrecategoria, descripcion, stock, precioUnitario, precioBlister, nblister, precioCaja, ncaja, fechaproduccion, fechavencimiento, recetamedica)VALUES 
+(1, 'Paracetamol', 'Paracetamol', 'Analgesia para aliviar el dolor', 100, 10, 20, 10, 30, 100, '2022-01-01', '2025-01-01', 'No requiere'),
+(2, 'Amoxicilina', 'Amoxicilina', 'Antibiótico para tratar infecciones', 100, 10, 20, 10, 30, 100, '2022-02-01', '2025-02-01', 'Requiere'),
+(3, 'Ibuprofeno', 'Ibuprofeno', 'Antiinflamatorio para reducir la inflamación', 100, 10, 20, 10, 30, 100, '2022-03-01', '2026-03-01', 'No requiere'),
+(4, 'GriPachek', 'GriPachek', 'Analgesia para aliviar el dolor', 100, 10, 20, 5, 30, 100, '2022-01-01', '2025-01-01', 'No requiere'),
 
-(1, 'Cetamol', 'Paracetamol', 'Antibiótico para tratar infecciones', 100, 12.99, '2022-02-01', '2025-02-01', 'Requiere'),
-(2, 'Cilina', 'Amoxicilina', 'Antiinflamatorio para reducir la inflamación', 10, 7.50, '2022-03-01', '2026-03-01', 'No requiere'),
-(3, 'Profeno', 'Ibuprofeno', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 'No requiere'),
-(4, 'Pachek', 'GriPachek', 'Antibiótico para tratar infecciones', 100, 12.99, '2022-02-01', '2025-02-01', 'Requiere'),
+(1, 'Cetamol', 'Paracetamol', 'Antibiótico para tratar infecciones', 100, 10, 20, 5, 30, 100, '2022-02-01', '2025-02-01', 'Requiere'),
+(2, 'Cilina', 'Amoxicilina', 'Antiinflamatorio para reducir la inflamación', 10,10, 20, 10, 30, 100,  '2022-03-01', '2026-03-01', 'No requiere'),
+(3, 'Profeno', 'Ibuprofeno', 'Analgesia para aliviar el dolor', 100, 10, 20, 5, 30, 100, '2022-01-01', '2025-01-01', 'No requiere'),
+(4, 'Pachek', 'GriPachek', 'Antibiótico para tratar infecciones', 100, 10, 20, 5, 30, 100,  '2022-02-01', '2025-02-01', 'Requiere'),
 
-(1, 'Ceta', 'Paracetamol', 'Antiinflamatorio para reducir la inflamación', 100, 7.50, '2022-03-01', '2026-03-01', 'No requiere'),
-(2, 'Moxilona', 'Amoxicilina', 'Analgesia para aliviar el dolor', 100, 5.99, '2022-01-01', '2025-01-01', 'No requiere'),
-(3, 'Uprofeno', 'Ibuprofeno', 'Antibiótico para tratar infecciones', 100, 12.99, '2022-02-01', '2025-02-01', 'Requiere'),
-(4, 'Ipachek', 'GriPachek', 'Antiinflamatorio para reducir la inflamación', 100, 7.50, '2022-03-01', '2026-03-01', 'No requiere');
-
-
+(1, 'Ceta', 'Paracetamol', 'Antiinflamatorio para reducir la inflamación', 100, 10, 20, 10, 30, 100,  '2022-03-01', '2026-03-01', 'No requiere'),
+(2, 'Moxilona', 'Amoxicilina', 'Analgesia para aliviar el dolor', 100, 10, 20, 10, 30, 100, '2022-01-01', '2025-01-01', 'No requiere'),
+(3, 'Uprofeno', 'Ibuprofeno', 'Antibiótico para tratar infecciones', 100, 10, 20, 10, 30, 100, '2022-02-01', '2025-02-01', 'Requiere'),
+(4, 'Ipachek', 'GriPachek', 'Antiinflamatorio para reducir la inflamación', 100, 10, 20, 10, 30, 100,  '2022-03-01', '2026-03-01', 'No requiere');
 
 CREATE TABLE compraProductos
 (
