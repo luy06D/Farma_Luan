@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
 
     let dataNew = true;
@@ -30,7 +31,7 @@ $(document).ready(function(){
                         },
                         {
                             responsivePriority: 1,
-                            targets: [5],
+                            targets: [7],
                             render: function (data, type, row){
                                 if(type === 'display'){
                                     if(data === "Agotado"){
@@ -84,7 +85,7 @@ $(document).ready(function(){
         const producto      = $("#nombreProducto").val().trim();
         const categoria      = $("#nombreCategoria").val().trim();
         const unidades     = $("#ls-unidades").val().trim();
-        const precio        = $("#precio").val().trim();
+        const precio        = $("#precio_unidad").val().trim();
         const receta        = $("#ls-receta").val().trim();        
 
         let sendData = {
@@ -94,7 +95,9 @@ $(document).ready(function(){
             'nombrecategoria'    : $("#nombreCategoria").val(),
             'descripcion'       : $("#descripcion").val(),
             'stock'             : $("#stock").val(),
-            'precio'            : $("#precio").val(),
+            'precio_unidad'     : $("#precio_unidad").val(),
+            'precio_blister'    : $("#precio_blister").val(),
+            'precio_caja'       : $("#precio_caja").val(),
             'fechaproduccion'   : $("#fechaproduccion").val(),
             'fechavencimiento'  : $("#fechavencimiento").val(),            
             'recetamedica'      : $("#ls-receta").val(),            
@@ -119,6 +122,7 @@ $(document).ready(function(){
                             type: 'POST',
                             data: sendData,
                             success: function(result){
+                                console.log(result)
                                 $("#form-productos")[0].reset();
                                 $("#modal-newProduct").modal('hide');
                                 dataNew = true;
@@ -149,7 +153,9 @@ $(document).ready(function(){
                 $("#nombreCategoria").val(result.nombrecategoria);
                 $("#descripcion").val(result.descripcion);
                 $("#stock").val(result.stock);
-                $("#precio").val(result.precio);
+                $("#precio_unidad").val(result.precio_unidad);
+                $("#precio_blister").val(result.precio_blister);
+                $("#precio_caja").val(result.precio_caja);
                 $("#fechaproduccion").val(result.fechaproduccion);
                 $("#fechavencimiento").val(result.fechavencimiento);                
                 $("#ls-receta").val(result.recetamedica);
@@ -213,4 +219,5 @@ $(document).ready(function(){
 
     productos_listar();
     get_unidades();
+            
 })

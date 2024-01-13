@@ -5,8 +5,10 @@
     "sLengthMenu":     "Mostrar _MENU_ registros",
     "sZeroRecords":    "No se encontraron resultados",
     "sEmptyTable":     "Ningún dato disponible en esta tabla",
+
     "sInfo":           "Hay  _TOTAL_ productos en la lista",
     "sInfoEmpty":      "Hay  0 productos en la lista",
+
     "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
     "sSearch":         "Buscar:",
     "sInfoThousands":  ",",

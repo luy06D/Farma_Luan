@@ -96,7 +96,7 @@ $(document).ready(function(){
             "<tr><td style='display: none;'>" + idproducto + "</td><td>"
             + selecProducto + "</td><td>"          
             + inputCantidad.prop('outerHTML') + "</td><td>"
-            + inputPrecioC.prop('outerHTML') + "</td><td>"
+            + inputPrecioC.prop('outerHTML') + "</td><td>"            
             + link.prop('outerHTML') + "</td></tr>"
           );
         
@@ -200,8 +200,7 @@ $(document).ready(function(){
     }
 
 
-    $("#btn-registrarC").click(compra_registrar);
-    $("#prueba").click(detalle_productos);
+    $("#btn-registrarC").click(compra_registrar);    
     $("#b-producto").keyup(buscar_producto);
 
       //Evento click al boton para quitar en compras

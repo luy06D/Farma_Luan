@@ -8,7 +8,8 @@ CREATE PROCEDURE spu_productos_listar()
 BEGIN 
 
 SELECT 	PRO.idproducto, PRO.nombreproducto, nombrecategoria,
-	PRO.stock,PRO.estado, PRO.precio, unidadmedida,
+	PRO.stock,PRO.estado, PRO.precio_unidad, PRO.precio_blister,
+	PRO.precio_caja, unidadmedida,
 	PRO.fechavencimiento, PRO.fechaproduccion, PRO.recetamedica
 FROM productos PRO
 INNER JOIN unidades UN ON UN.idunidad = PRO.idunidad;
@@ -26,15 +27,19 @@ IN _nombreproducto VARCHAR(50),
 IN _nombrecategoria VARCHAR(50),
 IN _descripcion	    VARCHAR(150),
 IN _stock	    SMALLINT,
-IN _precio	    SMALLINT,
+IN _precio_unidad    DECIMAL(5,2),
+IN _precio_blister  DECIMAL(5,2),
+IN _precio_caja	    DECIMAL(5,2),
 IN _fechaproduccion	DATE,
 IN _fechavencimiento	DATE,
 IN _recetamedica	VARCHAR(15)
 )
 BEGIN 
 
-INSERT INTO productos (idunidad, nombreproducto, nombrecategoria, descripcion, stock, precio, fechaproduccion, fechavencimiento, recetamedica) VALUES
-		(_idunidad, _nombreproducto, _nombrecategoria, _descripcion, _stock, _precio, _fechaproduccion, _fechavencimiento, _recetamedica);
+INSERT INTO productos (idunidad, nombreproducto, nombrecategoria, descripcion, stock, precio_unidad, precio_blister, precio_caja,
+			fechaproduccion, fechavencimiento, recetamedica) VALUES
+		(_idunidad, _nombreproducto, _nombrecategoria, _descripcion, _stock, _precio_unidad, _precio_blister, _precio_caja,
+		 _fechaproduccion, _fechavencimiento, _recetamedica);
 
 	UPDATE productos SET estado = 
         CASE
@@ -55,7 +60,9 @@ IN _idunidad    INT,
 IN _nombreproducto VARCHAR(50),
 IN _nombrecategoria VARCHAR(50),
 IN _descripcion	    VARCHAR(150),
-IN _precio	    SMALLINT,
+IN _precio_unidad    DECIMAL(5,2),
+IN _precio_blister  DECIMAL(5,2),
+IN _precio_caja	    DECIMAL(5,2),
 IN _fechaproduccion	DATE,
 IN _fechavencimiento	DATE,
 IN _recetamedica	VARCHAR(15)
@@ -67,7 +74,9 @@ BEGIN
 	nombreproducto 	= _nombreproducto,
 	nombrecategoria = _nombrecategoria,
 	descripcion	= _descripcion,
-	precio 		= _precio,
+	precio_unidad 	= _precio_unidad,
+	precio_blister 	= _precio_blister,
+	precio_caja 	= _precio_caja,
 	fechaproduccion = _fechaproduccion,
 	fechavencimiento = _fechavencimiento,	
 	recetamedica 	= _recetamedica	
@@ -84,7 +93,7 @@ CREATE PROCEDURE spu_getProductos(IN _idproducto INT)
 BEGIN
 
 SELECT 	PRO.idproducto, PRO.stock, PRO.nombreproducto, PRO.nombrecategoria, UN.idunidad,
-	PRO.stock,PRO.estado, PRO.precio, PRO.fechaproduccion,
+	PRO.stock,PRO.estado, PRO.precio_unidad, PRO.precio_blister, PRO.precio_caja, PRO.fechaproduccion,
 	PRO.fechavencimiento, PRO.recetamedica, PRO.descripcion
 FROM productos PRO
 INNER JOIN unidades UN ON UN.idunidad = PRO.idunidad
@@ -92,7 +101,7 @@ WHERE PRO.idproducto = _idproducto;
 
 END $$
 
-CALL spu_getProductos(13);
+CALL spu_getProductos(1);
 
 -- BUSCAR PRODUCTOS
 DELIMITER $$

@@ -80,7 +80,9 @@
                                     <th>Producto</th>
                                     <th>Categoria</th>
                                     <th>Stock</th>
-                                    <th>Precio</th>
+                                    <th>Precio/unidad</th>
+                                    <th>Precio/blister</th>
+                                    <th>Precio/caja</th>
                                     <th>Estado</th>
                                     <th>Unidad </th>
                                     <th>Fecha Vencimiento</th>
@@ -132,9 +134,21 @@
                                 </div>
                               </div>
                               <div class="col-lg-4 mt-2">
-                                <label for="precio" class="col-form-label">Precio Unitario:</label>
+                                <label for="precio_unidad" class="col-form-label">Precio/Unidad:</label>
                                 <div class="col-sm-12">
-                                  <input type="number" class="form-control" id="precio" placeholder="Escriba aquí">
+                                  <input type="number" class="form-control" id="precio_unidad" placeholder="Escriba aquí">
+                                </div>
+                              </div>
+                              <div class="col-lg-4 mt-2">
+                                <label for="precio_blister" class="col-form-label">Precio/Blister:</label>
+                                <div class="col-sm-12">
+                                  <input type="number" class="form-control" id="precio_blister" placeholder="Escriba aquí">
+                                </div>
+                              </div>
+                              <div class="col-lg-4 mt-2">
+                                <label for="precio_caja" class="col-form-label">Precio/Caja:</label>
+                                <div class="col-sm-12">
+                                  <input type="number" class="form-control" id="precio_caja" placeholder="Escriba aquí">
                                 </div>
                               </div>
                               <div class="col-lg-4 mt-2">
