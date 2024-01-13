@@ -63,7 +63,7 @@ $(document).ready(function () {
 
                 dataTable.clear().rows.add($("#tabla_producto_venta tbody tr")).draw();
                 calcularMontoTotal();
-
+                calcularVuelto();
                 $(".editar-product").removeClass("active");
             }
         });
@@ -171,12 +171,13 @@ $(document).ready(function () {
         productos_listar_ventas("");
         productos_listar_por_categoria(""); 
     });
-
+    
     function productos_registrar() {
         const idproducto = $("#idproducto").val().trim();
+        const unidad = $("#unidad").val().trim(); 
         const cantidad = $("#cantidad").val().trim();
     
-        if (idproducto === '' || cantidad === '' || parseInt(cantidad) <= 0) {
+        if (idproducto === '' || unidad === '' || cantidad === '' || parseInt(cantidad) <= 0) {
             stockInsuficiente();
         } else {
             $.ajax({
@@ -189,46 +190,121 @@ $(document).ready(function () {
                         var producto = response.data[0];
                         var stockDisponible = producto.stock;
     
-                        if (parseInt(stockDisponible) < parseInt(cantidad)) {
+                        // Validar según la unidad seleccionada
+                        var cantidadAComparar = 0;
+    
+                        if (unidad === 'unidad') {
+                            cantidadAComparar = parseInt(cantidad);
+                        } else if (unidad === 'blister') {
+                            // Validar que haya suficiente stock teniendo en cuenta nblister
+                            cantidadAComparar = parseInt(cantidad) * parseInt(producto.nblister);
+                            if (cantidadAComparar > parseInt(stockDisponible)) {
+                                stockInsuficiente();
+                                return;  // Salir de la función si hay insuficiencia de stock
+                            }
+                        } else if (unidad === 'caja') {
+                            // Validar que haya suficiente stock teniendo en cuenta ncaja
+                            cantidadAComparar = parseInt(cantidad) * parseInt(producto.ncaja);
+                            if (cantidadAComparar > parseInt(stockDisponible)) {
+                                stockInsuficiente();
+                                return;  // Salir de la función si hay insuficiencia de stock
+                            }
+                        }
+    
+                        // Resto del código para agregar el producto a la lista
+                        const senData = {
+                            'op': 'registrar_producto_lista',
+                            'idproducto': $("#idproducto").val(),
+                            'unidad': $("#unidad").val(),
+                            'cantidad': $("#cantidad").val(),
+                        };
+    
+                        $.ajax({
+                            url: '../controllers/ventas.controller.php',
+                            type: 'POST',
+                            data: senData,
+                            success: function (response) {
+                                $("#productos")[0].reset();
+                                $("#modal-agregarP").modal('hide');
+    
+                                // Actualizar la tabla de productos
+                                productos_listar_ventas("");
+                                productos_listar_por_categoria(""); 
+                                productos_listar();
+    
+                                toastFinalizar("Agregado correctamente");
+                            }
+                        });
+                    }
+                },
+            });
+        }
+    }
+    
+    
+    function productos_registrar() {
+        const idproducto = $("#idproducto").val().trim();
+        const unidad = $("#unidad").val().trim(); 
+        const cantidad = $("#cantidad").val().trim();
+    
+        if (idproducto === '' || unidad === '' || cantidad === '' || parseInt(cantidad) <= 0) {
+            stockInsuficiente();
+        } else {
+            $.ajax({
+                url: '../controllers/ventas.controller.php',
+                type: 'POST',
+                data: { 'op': 'productos_listar_id', 'idproducto': idproducto },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status) {
+                        var producto = response.data[0];
+                        var stockDisponible = producto.stock;
+    
+                        // Validar según la unidad seleccionada
+                        var cantidadAComparar = 0;
+    
+                        if (unidad === 'unidad') {
+                            cantidadAComparar = parseInt(cantidad);
+                        } else if (unidad === 'blister') {
+                            cantidadAComparar = parseInt(cantidad) * parseInt(producto.nblister);
+                        } else if (unidad === 'caja') {
+                            cantidadAComparar = parseInt(cantidad) * parseInt(producto.ncaja);
+                        }
+    
+                        if (cantidadAComparar > parseInt(stockDisponible)) {
                             stockInsuficiente();
                         } else {
-                            // Verificar si el producto ya está en la lista
-                            var productoExistente = $("#tabla_producto tbody tr[data-idproducto='" + idproducto + "']");
-                            
-                            if (productoExistente.length > 0) {
-                                // Producto ya en la lista, actualizar la cantidad
-                                var cantidadExistente = parseInt(productoExistente.find("td:eq(4)").text());
-                                productoExistente.find("td:eq(4)").text(cantidadExistente + parseInt(cantidad));
-                            } else {
-                                // Producto no en la lista, agregar nueva fila
-                                const senData = {
-                                    'op': 'registrar_producto_lista',
-                                    'idproducto': $("#idproducto").val(),
-                                    'cantidad': $("#cantidad").val(),
-                                };
+                            // Agregar el producto a la lista
+                            const senData = {
+                                'op': 'registrar_producto_lista',
+                                'idproducto': $("#idproducto").val(),
+                                'unidad': $("#unidad").val(),
+                                'cantidad': $("#cantidad").val(),
+                            };
     
-                                $.ajax({
-                                    url: '../controllers/ventas.controller.php',
-                                    type: 'POST',
-                                    data: senData,
-                                    success: function (response) {
-                                        $("#productos")[0].reset();
-                                        $("#modal-agregarP").modal('hide');
+                            $.ajax({
+                                url: '../controllers/ventas.controller.php',
+                                type: 'POST',
+                                data: senData,
+                                success: function (response) {
+                                    $("#productos")[0].reset();
+                                    $("#modal-agregarP").modal('hide');
     
-                                        productos_listar_ventas("");
-                                        productos_listar_por_categoria(""); 
-                                        productos_listar();
+                                    // Actualizar la tabla de productos
+                                    productos_listar_ventas("");
+                                    productos_listar_por_categoria(""); 
+                                    productos_listar();
     
-                                        toastFinalizar("Agregado correctamente");
-                                    }
-                                });
-                            }
+                                    toastFinalizar("Agregado correctamente");
+                                }
+                            });
                         }
                     }
                 },
             });
         }
     }
+    
     
 
     $("#cancelar").on("click", function () {
@@ -320,17 +396,49 @@ $(document).ready(function () {
     
         $("#monto_total").val(montoTotal.toFixed(2));
     }
+
+
+    function calcularVuelto() {
+        var montoTotal = parseFloat($("#monto_total").val()) || 0;
+        var pago = parseFloat($("#pago").val()) || 0;
+    
+        // Verificar que el pago sea mayor o igual al monto total
+        if (pago >= montoTotal) {
+            // Calcular el vuelto solo si el pago es mayor o igual al monto total
+            var vuelto = pago - montoTotal;
+    
+            // Actualizar el campo de vuelto
+            $("#vuelto").val(vuelto.toFixed(2));
+        } else {
+            // Si el pago es menor al monto total, mostrar vuelto como cero
+            $("#vuelto").val("0.00");
+        }
+    }
+    
+    $("#pago").on("input", function () {
+        // Solo calcular el vuelto si el campo de pago es mayor o igual a cero
+        if (parseFloat($(this).val()) >= 0) {
+            calcularVuelto();
+        }
+    });
+    
     
     $("#guardar").on("click", function () {
         console.log("Antes de productos_registrar");
         productos_registrar();
         console.log("Después de productos_registrar");
 
-        setTimeout(function() {
+        setTimeout(function () {
             calcularMontoTotal();
+            calcularVuelto();
         }, 100);
+
+       
     });
     
+
+    calcularMontoTotal();
+    calcularVuelto();
     cargarUsuarios();
     productos_listar();
     productos_listar_ventas("");

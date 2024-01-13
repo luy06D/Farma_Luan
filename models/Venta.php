@@ -105,10 +105,11 @@ class Ventas extends Conexion{
             "message" => ""
         ];
         try{
-            $consulta = $this->connection->prepare("CALL agregarProductoALaLista(?,?)");
+            $consulta = $this->connection->prepare("CALL agregarProductoALaLista(?,?,?)");
             $respuesta["status"] = $consulta->execute(array(
                 
                 $datos["idproducto"],
+                $datos["unidad"],
                 $datos["cantidad"],
             ));
         }

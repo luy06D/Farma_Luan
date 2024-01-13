@@ -47,9 +47,13 @@ if(isset($_GET['op'])){
                         <td>{$listar['nombreproducto']}</td>
                         <td>{$listar['nombrecategoria']}</td>
                         <td>{$listar['stock']}</td>
-                        <td>S/.{$listar['precio']}</td>
+                        <td>S/.{$listar['precioUnitario']}</td>
+                        <td>{$listar['nblister']}</td>
+                        <td>S/.{$listar['precioBlister']}</td>
+                        <td>{$listar['ncaja']}</td>
+                        <td>S/.{$listar['precioCaja']}</td>
                         <td>{$listar['fechavencimiento']}</td>
-                        <td>{$listar['recetamedica']}</td>                                    
+                        <td>{$listar['recetamedica']}</td>                                     
                         <td>                
                             <a type='button' class='editar-product btn btn-outline-success btn-sm' data-bs-toggle='modal' data-bs-target='#modal-agregarP' data-idproducto ='{$listar['idproducto']}'><i class='bi bi-check-circle'></i></a>
 
@@ -79,9 +83,13 @@ if(isset($_GET['op'])){
                         <td>{$listar['nombreproducto']}</td>
                         <td>{$listar['nombrecategoria']}</td>
                         <td>{$listar['stock']}</td>
-                        <td>S/.{$listar['precio']}</td>
+                        <td>S/.{$listar['precioUnitario']}</td>
+                        <td>{$listar['nblister']}</td>
+                        <td>S/.{$listar['precioBlister']}</td>
+                        <td>{$listar['ncaja']}</td>
+                        <td>S/.{$listar['precioCaja']}</td>
                         <td>{$listar['fechavencimiento']}</td>
-                        <td>{$listar['recetamedica']}</td>
+                        <td>{$listar['recetamedica']}</td>       
                         <td>
                             <a type='button' class='editar-product btn btn-outline-success btn-sm' data-bs-toggle='modal' data-bs-target='#modal-agregarP' data-idproducto ='{$listar['idproducto']}'><i class='bi bi-check-circle'></i></a>
                         </td>
@@ -145,6 +153,7 @@ if(isset($_POST['op'])){
     if($_POST['op'] == 'registrar_producto_lista'){
         $data = [
             "idproducto"       => $_POST['idproducto'],
+            "unidad"    => $_POST['unidad'],
             "cantidad"    => $_POST['cantidad'],
         ];
 

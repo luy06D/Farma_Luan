@@ -134,7 +134,11 @@
                                     <th>Producto</th>
                                     <th>Categoria</th>
                                     <th>Stock</th>
-                                    <th>Precio</th>
+                                    <th>Precio Unidad</th>
+                                    <th>Uni Blister</th>
+                                    <th>Precio blister</th>
+                                    <th>Uni Caja</th>
+                                    <th>Precio Caja</th>
                                     <th>Fecha Vencimiento</th>
                                     <th>Receta Médica</th>                                    
                                     <th>Operación</th>
@@ -160,10 +164,14 @@
                                     <th>Producto</th>
                                     <th>Categoria</th>
                                     <th>Stock</th>
-                                    <th>Precio</th>
+                                    <th>Precio Unidad</th>
+                                    <th>Uni Blister</th>
+                                    <th>Precio blister</th>
+                                    <th>Uni Caja</th>
+                                    <th>Precio Caja</th>
                                     <th>Fecha Vencimiento</th>
                                     <th>Receta Médica</th>                                    
-                                    <th>Operación</th>
+                                    <th>Operación</th>s
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -189,21 +197,34 @@
                             <div class="modal-body">
                                 <form id="productos">
 
-                                    <div class="card text-center" id="modal-header01" style="width: 250px; margin: 0 auto;">
+                                    <div class="card" id="modal-header01" style="width: 250px; margin: 0 auto;">
                                         <div class="card-header">
                                             <h5 class="modal-title text-secondary" id="modal-titulo01">Listar producto</h5>
                                         </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title" id="Nombreproducto"></h5>
-                                            <p class="card-text">Stock:<p id="stock"></p></p>
+                                        <div class="card-footer text">
+                                            <h5 class="card-title text-center" id="Nombreproducto"></h5>
+
+                                            <div class="text-center">
+                                              <span class="card-text">Stock:</span>
+                                              <span id="stock" ></span>
+                                            </div>
+                                        
 
                                             <div class="row justify-content-center">
-                                                <div class="col-md-8">
-                                                    <input type="number" class="form-control" id="cantidad" placeholder="Cantidad">
-                                                </div>
-                                            </div>
+                                                <div class="col-md-8 mt-4">
+                                                  <select id="unidad" class="form-select " aria-label="Default select example">
+                                                    <option value="unidad">Unidad</option>
+                                                    <option value="blister">Blister</option>
+                                                    <option value="caja">Caja</option>
+                                                  </select>
 
+                                                  <input type="number" class="form-control mt-2" id="cantidad" placeholder="Cantidad">
+                                                </div>
+
+                                                
+                                            </div>
                                         </div>
+
                                         <div class="card-footer text-muted">
                                             <button type="button" class="btn btn-success" id="guardar">Agregar</button>
                                             <button type="reset" class="btn btn-danger" data-bs-dismiss="modal"  id="cancelar">Cancelar</button>
@@ -329,7 +350,7 @@
                                 <span class="text">Vuelto</span>
                                 <div class="input-group mt-2">
                                   <span class="input-group-text" >s/</span>
-                                  <input type="number" class="form-control" id="vuelto"  disabled>
+                                  <input type="number" class="form-control" id="vuelto" placeholder="...." disabled>
                                 </div>
                               </div>               
 

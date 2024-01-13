@@ -31,22 +31,21 @@ BEGIN
 END $$
 
 
-CALL RegistrarVenta('Jesu_04');
-
-
-SELECT * FROM ventas;
-
 DELIMITER $$
 CREATE PROCEDURE spu_productos_listar_ventas(IN nombreP VARCHAR(40))
 BEGIN 
     SELECT 
-        productos.idproducto, 
-        productos.nombreproducto,		
-        productos.nombrecategoria,
-        productos.stock, 
-        productos.precio,
-        productos.fechavencimiento, 
-        productos.recetamedica
+        idproducto, 
+        nombreproducto,		
+	nombrecategoria,
+        stock, 
+        precioUnitario,
+        precioBlister,
+        nblister,
+	precioCaja,
+        ncaja,
+	fechavencimiento, 
+        recetamedica
     FROM productos 
     WHERE nombreP = '' OR productos.nombreproducto LIKE CONCAT(nombreP, '%');
 END $$
@@ -60,11 +59,14 @@ BEGIN
     SELECT 
         idproducto, 
         nombreproducto,		
-        nombrecategoria,
-        descripcion,
+	nombrecategoria,
         stock, 
-        precio,
-        fechavencimiento, 
+        precioUnitario,
+        precioBlister,
+        nblister,
+	precioCaja,
+        ncaja,
+	fechavencimiento, 
         recetamedica
     FROM productos
     WHERE nombrecategoria = categoriaP AND nombreproducto <> categoriaP;
@@ -97,60 +99,102 @@ CREATE TABLE ventaTemporal
 )
 ENGINE=INNODB;
 
+
 DELIMITER $$
 CREATE PROCEDURE agregarProductoALaLista(
     IN p_idproducto  INT,
+    IN p_unidad      VARCHAR(10),
     IN p_cantidad    SMALLINT
 )
 BEGIN
-    DECLARE v_precio DECIMAL(6,2);
-    DECLARE v_precioTotal DECIMAL(6,2);
+    DECLARE v_precio DECIMAL(5,2);
+    DECLARE v_precioTotal DECIMAL(5,2);
     DECLARE v_stock_actual INT;
+    DECLARE v_cantidad_real SMALLINT;
     DECLARE v_ultimo_idventa INT;
+    DECLARE v_nblister INT;
+    DECLARE v_ncaja INT;
 
     -- Obtener el último idventa
     SELECT MAX(idventa) INTO v_ultimo_idventa FROM ventas;
 
     -- Verificar si hay suficiente stock para agregar a la lista
-    SELECT stock INTO v_stock_actual FROM productos WHERE idproducto = p_idproducto;
+    SELECT stock, nblister, ncaja INTO v_stock_actual, v_nblister, v_ncaja FROM productos WHERE idproducto = p_idproducto;
 
-    IF v_stock_actual >= p_cantidad THEN
-        -- Obtener el precio del producto
-        SELECT precio INTO v_precio FROM productos WHERE idproducto = p_idproducto;
+    IF v_stock_actual > 0 THEN
+        -- Calcular la cantidad real según la unidad
+        CASE
+            WHEN p_unidad IN ('unidad', 'blister', 'caja') THEN
+                -- Para 'unidad', 'blister' y 'caja', se mantiene la misma lógica
+                SET v_cantidad_real = p_cantidad;
+            ELSE
+                -- Manejar otro caso según sea necesario
+                SET v_cantidad_real = 0;
+        END CASE;
+
+        -- Ajustar la cantidad real según el tipo de unidad
+        IF p_unidad = 'blister' THEN
+            SET v_cantidad_real = v_cantidad_real * v_nblister;  -- Ajustar la cantidad según nblister
+        ELSEIF p_unidad = 'caja' THEN
+            SET v_cantidad_real = v_cantidad_real * v_ncaja;  -- Ajustar la cantidad según ncaja
+        END IF;
+
+        -- Obtener el precio del producto según la unidad
+        CASE
+            WHEN p_unidad = 'unidad' THEN
+                SELECT precioUnitario INTO v_precio FROM productos WHERE idproducto = p_idproducto;
+            WHEN p_unidad = 'blister' THEN
+                SELECT precioBlister INTO v_precio FROM productos WHERE idproducto = p_idproducto;
+            WHEN p_unidad = 'caja' THEN
+                SELECT precioCaja INTO v_precio FROM productos WHERE idproducto = p_idproducto;
+            ELSE
+                -- Manejar otro caso según sea necesario
+                SET v_precio = 0;
+        END CASE;
 
         -- Calcular el precio total
-        SET v_precioTotal = v_precio * p_cantidad;
+        IF p_unidad = 'blister' THEN
+            SET v_precioTotal = v_precio * (v_cantidad_real / v_nblister); -- Ajustar precio total según cantidad real por blister
+        ELSEIF p_unidad = 'caja' THEN
+            SET v_precioTotal = v_precio * (v_cantidad_real / v_ncaja); -- Ajustar precio total según cantidad real por caja
+        ELSE
+            SET v_precioTotal = v_precio * v_cantidad_real;
+        END IF;
 
         -- Verificar si el producto ya está en la lista temporal
-        IF EXISTS (SELECT 1 FROM ventaTemporal WHERE idproducto = p_idproducto AND idventa = v_ultimo_idventa) THEN
+        IF EXISTS (SELECT 1 FROM ventaTemporal WHERE idproducto = p_idproducto AND idventa = v_ultimo_idventa AND unidadproducto = p_unidad) THEN
             -- El producto ya está en la lista, actualizar cantidad y precio total
             UPDATE ventaTemporal
             SET cantidad = cantidad + p_cantidad, preciototal = preciototal + v_precioTotal
-            WHERE idproducto = p_idproducto AND idventa = v_ultimo_idventa;
+            WHERE idproducto = p_idproducto AND idventa = v_ultimo_idventa AND unidadproducto = p_unidad;
         ELSE
             -- Agregar el producto a la lista temporal
             INSERT INTO ventaTemporal (idproducto, idventa, cantidad, unidadproducto, preciototal)
-            VALUES (p_idproducto, v_ultimo_idventa, p_cantidad, 'unidad', v_precioTotal);
+            VALUES (p_idproducto, v_ultimo_idventa, p_cantidad, p_unidad, v_precioTotal);
         END IF;
 
         -- Verificar si el producto ya está en la lista de ventas
-        IF EXISTS (SELECT 1 FROM detalleVentas WHERE idproducto = p_idproducto AND idventa = v_ultimo_idventa) THEN
+        IF EXISTS (SELECT 1 FROM detalleVentas WHERE idproducto = p_idproducto AND idventa = v_ultimo_idventa AND unidadproducto = p_unidad) THEN
             -- El producto ya está en la lista, actualizar cantidad y precio total
             UPDATE detalleVentas
             SET cantidad = cantidad + p_cantidad, preciototal = preciototal + v_precioTotal
-            WHERE idproducto = p_idproducto AND idventa = v_ultimo_idventa;
+            WHERE idproducto = p_idproducto AND idventa = v_ultimo_idventa AND unidadproducto = p_unidad;
         ELSE
             -- Agregar el producto a la lista de ventas
             INSERT INTO detalleVentas (idproducto, idventa, cantidad, unidadproducto, preciototal)
-            VALUES (p_idproducto, v_ultimo_idventa, p_cantidad, 'unidad', v_precioTotal);
+            VALUES (p_idproducto, v_ultimo_idventa, p_cantidad, p_unidad, v_precioTotal);
         END IF;
 
         -- Actualizar el stock del producto
         UPDATE productos
-        SET stock = stock - p_cantidad
+        SET stock = stock - v_cantidad_real
         WHERE idproducto = p_idproducto;
     END IF;
 END $$
+
+CALL agregarProductoALaLista(1, 'unidad', 1);
+CALL agregarProductoALaLista(1, 'unidad', 7);
+
 
 
 
@@ -158,38 +202,57 @@ DELIMITER $$
 CREATE PROCEDURE ListarLiderDetalleVenta()
 BEGIN
     SELECT 
-        vt.iddetalleventa,
-        p.nombreproducto AS nombre_producto,
-        u.nomusuario AS nombre_usuario,
-        vt.cantidad,
-        vt.unidadproducto,
-        vt.preciototal
-    FROM 
-        ventaTemporal vt
-    INNER JOIN productos p ON vt.idproducto = p.idproducto
-    INNER JOIN ventas v ON vt.idventa = v.idventa
-    INNER JOIN usuarios u ON v.idusuario = u.idusuario;
-END $$
+        iddetalleventa,
+        nombreproducto AS nombre_producto,
+        nomusuario AS nombre_usuario,
+        cantidad,
+        unidadproducto,
+        preciototal
+    FROM  ventaTemporal 
+    INNER JOIN productos ON ventaTemporal.idproducto = productos.idproducto
+    INNER JOIN ventas ON ventaTemporal.idventa = ventas.idventa
+    INNER JOIN usuarios ON ventas.idusuario = usuarios.idusuario
+    WHERE cantidad > 0;  -- Mostrar solo registros con cantidad mayor que cero
+END $$  
 
 DELIMITER $$
+
 CREATE PROCEDURE eliminarProducto(
     IN p_iddetalleventa INT
 )
 BEGIN
     DECLARE v_idproducto INT;
     DECLARE v_cantidad INT;
+    DECLARE v_unidadproducto VARCHAR(10);
+    DECLARE v_nblister INT;
+    DECLARE v_ncaja INT;
 
-    -- Obtener el idproducto y la cantidad del producto en la lista temporal
-    SELECT idproducto, cantidad INTO v_idproducto, v_cantidad
+    -- Obtener el idproducto, cantidad, y unidadproducto del producto en la lista temporal
+    SELECT idproducto, cantidad, unidadproducto INTO v_idproducto, v_cantidad, v_unidadproducto
     FROM ventaTemporal
     WHERE iddetalleventa = p_iddetalleventa;
 
     -- Verificar si el registro existe en la lista temporal
     IF v_idproducto IS NOT NULL THEN
-        -- Devolver la cantidad al stock de productos
-        UPDATE productos
-        SET stock = stock + v_cantidad
-        WHERE idproducto = v_idproducto;
+        -- Obtener los valores de nblister y ncaja del producto
+        SELECT nblister, ncaja INTO v_nblister, v_ncaja FROM productos WHERE idproducto = v_idproducto;
+
+        -- Devolver la cantidad al stock de productos según la unidadproducto
+        CASE
+            WHEN v_unidadproducto = 'blister' THEN
+                UPDATE productos
+                SET stock = stock + (v_cantidad * v_nblister)
+                WHERE idproducto = v_idproducto;
+            WHEN v_unidadproducto = 'caja' THEN
+                UPDATE productos
+                SET stock = stock + (v_cantidad * v_ncaja)
+                WHERE idproducto = v_idproducto;
+            ELSE
+                -- Para unidad u otros casos, devolver la cantidad directamente
+                UPDATE productos
+                SET stock = stock + v_cantidad
+                WHERE idproducto = v_idproducto;
+        END CASE;
 
         -- Eliminar el producto de la lista temporal
         DELETE FROM ventaTemporal WHERE iddetalleventa = p_iddetalleventa;
@@ -198,6 +261,9 @@ BEGIN
         DELETE FROM detalleVentas WHERE iddetalleventa = p_iddetalleventa;
     END IF;
 END $$
+
+
+
 
 
 
@@ -244,7 +310,7 @@ CALL RealizarPago('Efectivo', 1000.00);
 CALL  spu_productos_listar_ventas('p');
 
 -- PROCEDIMINETO agregarProductoALaLista
-CALL agregarProductoALaLista(3, 5);
+CALL agregarProductoALaLista(2, 'blister', 1 );
 CALL agregarProductoALaLista(2, 1);
 
 CALL ListarLiderDetalleVenta();
