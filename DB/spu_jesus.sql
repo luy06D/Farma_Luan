@@ -20,12 +20,12 @@ CREATE PROCEDURE RegistrarVenta(
 BEGIN
     DECLARE usuarioID INT;
 
-    -- Obtener el ID del usuario usando el nombre de usuario
+
     SELECT idusuario INTO usuarioID FROM usuarios WHERE nomusuario = nombreUsuario;
 
-    -- Verificar si se encontró el usuario
+
     IF usuarioID IS NOT NULL THEN
-        -- Insertar la venta utilizando el ID del usuario
+
         INSERT INTO ventas (idusuario, fechaventa) VALUES (usuarioID, NOW());
     END IF;
 END $$
@@ -212,7 +212,7 @@ BEGIN
     INNER JOIN productos ON ventaTemporal.idproducto = productos.idproducto
     INNER JOIN ventas ON ventaTemporal.idventa = ventas.idventa
     INNER JOIN usuarios ON ventas.idusuario = usuarios.idusuario
-    WHERE cantidad > 0;  -- Mostrar solo registros con cantidad mayor que cero
+    WHERE cantidad > 0;  
 END $$  
 
 DELIMITER $$
@@ -227,7 +227,7 @@ BEGIN
     DECLARE v_nblister INT;
     DECLARE v_ncaja INT;
 
-    -- Obtener el idproducto, cantidad, y unidadproducto del producto en la lista temporal
+
     SELECT idproducto, cantidad, unidadproducto INTO v_idproducto, v_cantidad, v_unidadproducto
     FROM ventaTemporal
     WHERE iddetalleventa = p_iddetalleventa;
@@ -254,10 +254,10 @@ BEGIN
                 WHERE idproducto = v_idproducto;
         END CASE;
 
-        -- Eliminar el producto de la lista temporal
+
         DELETE FROM ventaTemporal WHERE iddetalleventa = p_iddetalleventa;
 
-        -- Eliminar el producto de la lista de ventas
+
         DELETE FROM detalleVentas WHERE iddetalleventa = p_iddetalleventa;
     END IF;
 END $$
@@ -268,7 +268,8 @@ END $$
 
 
 
-CALL  eliminarProducto(3); -- Cambia 1 por el iddetalleventa que deseas eliminar
+CALL  eliminarProducto(3); 
+
 
 DELIMITER $$
 CREATE PROCEDURE RealizarPago(
